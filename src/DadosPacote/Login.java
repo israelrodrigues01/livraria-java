@@ -13,6 +13,7 @@ public class Login {
 	
 	public void acessar() {
 		System.out.println("acessar!");
+		console.clear();
 		
 		this.logado = true;
 	}

@@ -2,11 +2,18 @@ package DadosPacote;
 
 public class Usuario {
 
-	private int id;
+	private static int id = 0;
 	private String nome;
 	private String email;
 	private String senha;
 	private int permissao;
+
+	Usuario(String nome, String email, String senha) {
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		Usuario.id += 1;
+	}
 
 	public String getNome() {
 		return nome;

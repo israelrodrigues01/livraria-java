@@ -17,7 +17,7 @@ public class Login {
 	public void acessar(RepositorioUser usuarios) {
 		ArrayList<Usuario> users = usuarios.getArrayUser();
 
-		String nomeUsuario = "", email, senha;
+		String email, senha;
 		int count = 0;
 
 		System.out.println("\nDigite seu email: ");

@@ -8,7 +8,7 @@ public class Usuario {
 	private String senha;
 	private int permissao;
 
-	Usuario(String nome, String email, String senha) {
+	public Usuario(String nome, String email, String senha) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
@@ -52,5 +52,4 @@ public class Usuario {
 		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", permissao="
 				+ permissao + "]";
 	}
-
 }

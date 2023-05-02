@@ -19,6 +19,10 @@ public class RepositorioUser {
 	public void deleteUser() {
 
 	}
+	
+	public ArrayList<Usuario> getArrayUser(){
+		return this.usuario;
+	}
 
 	public String getAllUsers() {
 		String resultado = "";

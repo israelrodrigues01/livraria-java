@@ -15,8 +15,6 @@ public class Login {
 	private boolean logado = false;
 
 	public void acessar(RepositorioUser usuarios) {
-		ArrayList<Usuario> users = usuarios.getArrayUser();
-
 		String email, senha;
 		int count = 0;
 
@@ -39,14 +37,13 @@ public class Login {
 				count++;
 			}
 
-			System.out.println(count);
-
 			if (count < 5) {
 				logado = true;
 			}
 
 			console.limpar();
 		} else {
+			console.limpar();
 			System.out.println("\nCadastre-se antes de fazer Login.");
 		}
 	}
@@ -73,7 +70,12 @@ public class Login {
 
 		do {
 			if (count >= 1) {
-				System.out.println("\n\nSenha diferentes, por favor digite novamente!");
+				console.limpar();
+				System.out.println("-------------------------------------------------\n"
+						+ "| Senha diferentes, por favor digite novamente! |\n"
+						+ "-------------------------------------------------\n"
+						+ "\nNome informado: " + nome
+						+ "\nEmail informado: " + email);
 			}
 
 			System.out.println("\nDigite sua senha: ");
@@ -87,7 +89,10 @@ public class Login {
 
 		Usuario usuario = new Usuario(nome, email, senha);
 
-		System.out.println("\n\nCadastro realizado com sucesso, agora faça login para acessar a conta!\n\n\n");
+		console.limpar();
+		System.out.println("--------------------------------------------------------------------------\n"
+				+ "| Cadastro realizado com sucesso, agora faça login para acessar a conta! |\n"
+				+ "--------------------------------------------------------------------------\n\n");
 
 		return usuario;
 	}

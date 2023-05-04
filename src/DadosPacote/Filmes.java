@@ -8,6 +8,12 @@ public class Filmes {
 	private int quantidade;
 	private int situaticao;
 
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id; 
+	}
 	public String getNome() {
 		return nome;
 	}

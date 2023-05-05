@@ -15,6 +15,10 @@ public class Usuario {
 		this.id = id;
 	}
 
+	public int getId() {
+		return this.id;
+	}
+
 	public String getNome() {
 		return nome;
 	}

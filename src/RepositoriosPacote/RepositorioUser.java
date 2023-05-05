@@ -16,8 +16,8 @@ public class RepositorioUser {
 
 	}
 
-	public void deleteUser() {
-
+	public void deleteUser(Usuario usuario) {
+		this.usuario.remove(usuario);
 	}
 
 	public ArrayList<Usuario> getArrayUser() {
@@ -38,8 +38,8 @@ public class RepositorioUser {
 	public Usuario getUserByEmail(String email) {
 		Usuario user = null;
 
-		for(Usuario u: usuario){
-			if(u.getEmail().equals(email)){
+		for (Usuario u : usuario) {
+			if (u.getEmail().equals(email)) {
 				user = u;
 			}
 		}
@@ -47,8 +47,15 @@ public class RepositorioUser {
 		return user;
 	}
 
-	public void getUserById() {
+	public Usuario getUserById(int id) {
+		Usuario user = null;
 
+		for (Usuario u : usuario) {
+			if (u.getId() == id) {
+				user = u;
+			}
+		}
+
+		return user;
 	}
-
 }

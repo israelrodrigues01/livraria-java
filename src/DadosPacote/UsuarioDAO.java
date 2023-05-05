@@ -74,6 +74,52 @@ public class UsuarioDAO {
         return usuario;
     }
 
+    public String opcoesEditarUset(int opcao, Usuario user, RepositorioUser usuarios) {
+        String mensagem = "";
+        switch (opcao) {
+            case 1: {
+                console.limpar();
+                this.editarNome(user);
+                mensagem = "----------------"
+                        + "\n| Nome editado |\n"
+                        + "----------------";
+                break;
+            }
+            case 2: {
+                console.limpar();
+                this.editarEmail(user, usuarios);
+                mensagem = "-----------------"
+                        + "\n| Email editado |\n"
+                        + "-----------------";
+                break;
+            }
+            case 3: {
+                console.limpar();
+                this.editarSenha(user);
+                mensagem = "-----------------"
+                        + "\n| Senha editada |\n"
+                        + "-----------------";
+                break;
+            }
+            case 4: {
+                console.limpar();
+                this.editarUser(user, usuarios);
+                break;
+            }
+            case 5: {
+                mensagem = "sair";
+                console.limpar();
+                break;
+            }
+            default: {
+                System.out.println("Opção invalida");
+                break;
+            }
+        }
+
+        return mensagem;
+    }
+
     public Usuario addUser(RepositorioUser usuarios) {
         String nome;
         String email;
@@ -110,14 +156,15 @@ public class UsuarioDAO {
 
         do {
             if (count < 1) {
-                System.out.println("\nPermissão do usuário:");
+                System.out.print("\nPermissão do usuário:");
             } else {
-                System.out.println("\nPor favor, Permissão do usuário só com os valores:");
+                System.out.print("\nPor favor, Permissão do usuário só com os valores:");
             }
-            System.out.print(""
-                    + "\n0 - Usuário normal"
+            System.out.println("\n0 - Usuário normal"
                     + "\n1 - Admin");
+
             permissao = input.nextInt();
+
             count++;
         } while (permissao < 0 || permissao > 1);
 
@@ -134,15 +181,31 @@ public class UsuarioDAO {
     }
 
     public void editarNome(Usuario user) {
+        String nome;
         System.out.println("Adicione seu novo nome de usuário: ");
-        String nome = input.nextLine();
+
+        do {
+            nome = input.nextLine();
+        } while (nome == "");
 
         user.setNome(nome);
     }
 
-    public void editarEmail(Usuario user) {
-        System.out.println("Adicione seu novo email de login: ");
-        String email = input.nextLine();
+    public void editarEmail(Usuario user, RepositorioUser usuarios) {
+        int count = 0;
+        String email;
+
+        do {
+            if (count < 1) {
+                System.out.println("Adicione seu novo email de login: ");
+            } else {
+                System.out.println("\nNão foi possível adicionar com este email, tente usar outro: ");
+            }
+            do {
+                email = input.nextLine();
+            } while (email == "");
+            count++;
+        } while (verificar.isEmail(usuarios, email));
 
         user.setEmail(email);
     }
@@ -176,10 +239,10 @@ public class UsuarioDAO {
         user.setSenha(senha);
     }
 
-    public void editarUser(Usuario user) {
+    public void editarUser(Usuario user, RepositorioUser usuarios) {
         this.editarNome(user);
         System.out.println("\n");
-        this.editarEmail(user);
+        this.editarEmail(user, usuarios);
         System.out.println("\n");
         this.editarSenha(user);
     }

@@ -25,8 +25,6 @@ public class SistemaTeste {
 
 		// Index
 
-		System.out.println("Bem-vindo(a) ao Prime Filmes :)");
-
 		Usuario userLogado = null;
 		Usuario user = new Usuario(0, "Cicero israel", "teste@gmail.com", "123");
 		Usuario admin = new Usuario(100, "Admin", "admin@gmail.com", "123");
@@ -35,9 +33,14 @@ public class SistemaTeste {
 		usuario.addUser(user);
 		usuario.addUser(admin);
 
+		console.limpar();
 		do {
 
 			do {
+				System.out.println("-----------------------------------"
+						+ "\n| Bem-vindo(a) ao Prime Filmes :) |\n"
+						+ "-----------------------------------");
+
 				menu.loginMenu();
 				number = input.nextInt();
 
@@ -111,46 +114,11 @@ public class SistemaTeste {
 
 									number = input.nextInt();
 
-									switch (number) {
-										case 1: {
-											console.limpar();
-											usuarioDAO.editarNome(userLogado);
-											mensagem = "----------------"
-													+ "\n| Nome editado |\n"
-													+ "----------------";
-											break;
-										}
-										case 2: {
-											console.limpar();
-											usuarioDAO.editarEmail(userLogado);
-											mensagem = "-----------------"
-													+ "\n| Email editado |\n"
-													+ "-----------------";
-											break;
-										}
-										case 3: {
-											console.limpar();
-											usuarioDAO.editarSenha(userLogado);
-											mensagem = "-----------------"
-													+ "\n| Senha editada |\n"
-													+ "-----------------";
-											break;
-										}
-										case 4: {
-											console.limpar();
-											usuarioDAO.editarUser(userLogado);
-											break;
-										}
-										case 5: {
-											sair = true;
-											console.limpar();
-											break;
-										}
-										default: {
-											System.out.println("Opção invalida");
-											break;
-										}
-									}
+									mensagem = usuarioDAO.opcoesEditarUset(number, userLogado, usuario);
+
+									if (mensagem == "sair")
+										sair = true;
+
 								} while (!sair);
 
 								break;
@@ -215,46 +183,11 @@ public class SistemaTeste {
 
 									number = input.nextInt();
 
-									switch (number) {
-										case 1: {
-											console.limpar();
-											usuarioDAO.editarNome(userLogado);
-											mensagem = "----------------"
-													+ "\n| Nome editado |\n"
-													+ "----------------";
-											break;
-										}
-										case 2: {
-											console.limpar();
-											usuarioDAO.editarEmail(userLogado);
-											mensagem = "-----------------"
-													+ "\n| Email editado |\n"
-													+ "-----------------";
-											break;
-										}
-										case 3: {
-											console.limpar();
-											usuarioDAO.editarSenha(userLogado);
-											mensagem = "-----------------"
-													+ "\n| Senha editada |\n"
-													+ "-----------------";
-											break;
-										}
-										case 4: {
-											console.limpar();
-											usuarioDAO.editarUser(userLogado);
-											break;
-										}
-										case 5: {
-											sair = true;
-											console.limpar();
-											break;
-										}
-										default: {
-											System.out.println("Opção invalida");
-											break;
-										}
-									}
+									mensagem = usuarioDAO.opcoesEditarUset(number, userLogado, usuario);
+
+									if (mensagem == "sair")
+										sair = true;
+
 								} while (!sair);
 
 								break;
@@ -298,14 +231,142 @@ public class SistemaTeste {
 											break;
 										}
 										case 3: {
-											console.limpar();
-											mensagem = "----------------------"
-													+ "\n| Usuário Atualizado |\n"
-													+ "----------------------";
+											int opcao;
+											int idUser;
+											String emailUser;
+											Usuario userAtualizar = null;
+											boolean sairAtualizarUser = false;
+
+											do {
+												do {
+													console.limpar();
+													System.out.println("Deseja pesquisar por email ou id?"
+															+ "\n1 - Id"
+															+ "\n2 - Email");
+													opcao = input.nextInt();
+													if (opcao == 1) {
+														console.limpar();
+														System.out.println("Digite o id do usuário: ");
+
+														do {
+															idUser = input.nextInt();
+														} while (idUser < 0);
+
+														if (usuario.getUserById(idUser) != null) {
+															userAtualizar = usuario.getUserById(idUser);
+														} else {
+															console.limpar();
+															System.out.println("--------------------------"
+																	+ "\n| Usuário não encontrado |\n"
+																	+ "--------------------------\n\n");
+														}
+
+													} else if (opcao == 2) {
+														console.limpar();
+														System.out.println("Digite o email do usuário: ");
+														do {
+															emailUser = input.nextLine();
+														} while (emailUser == "");
+
+														if (usuario.getUserByEmail(emailUser) != null) {
+															userAtualizar = usuario.getUserByEmail(emailUser);
+														} else {
+															console.limpar();
+															System.out.println("--------------------------"
+																	+ "\n| Usuário não encontrado |\n"
+																	+ "--------------------------\n\n");
+														}
+													}
+												} while (opcao < 1 || opcao > 2);
+
+												if (userAtualizar != null) {
+													console.limpar();
+													menu.editUserMenu();
+
+													number = input.nextInt();
+
+													mensagem = usuarioDAO.opcoesEditarUset(number, userAtualizar,
+															usuario);
+
+													sairAtualizarUser = true;
+												} else {
+													System.out.println("Deseja tentar novamente ou sair?"
+															+ "\n1 - Tentar Novamente"
+															+ "\n2 - Sair");
+													opcao = input.nextInt();
+
+													if (opcao == 2)
+														sairAtualizarUser = true;
+												}
+											} while (!sairAtualizarUser);
+
 											break;
 										}
 										case 4: {
-											console.limpar();
+											int opcao;
+											int idUser;
+											String emailUser;
+											Usuario userAtualizar = null;
+											boolean sairRemoverUser = false;
+
+											do {
+												console.limpar();
+
+												System.out.println("Deseja pesquisar por email ou id?"
+														+ "\n1 - Id"
+														+ "\n2 - Email");
+
+												opcao = input.nextInt();
+
+												if (opcao == 1) {
+													console.limpar();
+													System.out.println("Digite o id do usuário: ");
+
+													do {
+														idUser = input.nextInt();
+													} while (idUser < 0);
+
+													if (usuario.getUserById(idUser) != null) {
+														userAtualizar = usuario.getUserById(idUser);
+													} else {
+														console.limpar();
+														System.out.println("--------------------------"
+																+ "\n| Usuário não encontrado |\n"
+																+ "--------------------------\n\n");
+													}
+
+												} else if (opcao == 2) {
+													console.limpar();
+													System.out.println("Digite o email do usuário: ");
+													do {
+														emailUser = input.nextLine();
+													} while (emailUser == "");
+
+													if (usuario.getUserByEmail(emailUser) != null) {
+														userAtualizar = usuario.getUserByEmail(emailUser);
+													} else {
+														console.limpar();
+														System.out.println("--------------------------"
+																+ "\n| Usuário não encontrado |\n"
+																+ "--------------------------\n\n");
+													}
+												}
+
+												if (userAtualizar != null) {
+													usuario.deleteUser(userAtualizar);
+													sairRemoverUser = true;
+												} else {
+													System.out.println("Deseja tentar novamente ou sair?"
+															+ "\n1 - Tentar Novamente"
+															+ "\n2 - Sair");
+													opcao = input.nextInt();
+
+													if (opcao == 2)
+														sairRemoverUser = true;
+												}
+
+											} while (!sairRemoverUser);
+
 											mensagem = "--------------------"
 													+ "\n| Usuário Removido |\n"
 													+ "--------------------";

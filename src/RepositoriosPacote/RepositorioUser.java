@@ -16,11 +16,11 @@ public class RepositorioUser {
 
 	}
 
-	public void deleteUser() {
-
+	public void deleteUser(Usuario usuario) {
+		this.usuario.remove(usuario);
 	}
-	
-	public ArrayList<Usuario> getArrayUser(){
+
+	public ArrayList<Usuario> getArrayUser() {
 		return this.usuario;
 	}
 
@@ -29,14 +29,33 @@ public class RepositorioUser {
 
 		System.out.println("Usuários:");
 		for (Usuario user : this.usuario) {
-			resultado += "Nome: " + user.getNome() + "\nEmail: " + user.getEmail() + "\n------------------------";
+			resultado += user.toString() + "\n";
 		}
 
 		return resultado;
 	}
 
-	public void getUserById() {
-		
+	public Usuario getUserByEmail(String email) {
+		Usuario user = null;
+
+		for (Usuario u : usuario) {
+			if (u.getEmail().equals(email)) {
+				user = u;
+			}
+		}
+
+		return user;
 	}
 
+	public Usuario getUserById(int id) {
+		Usuario user = null;
+
+		for (Usuario u : usuario) {
+			if (u.getId() == id) {
+				user = u;
+			}
+		}
+
+		return user;
+	}
 }

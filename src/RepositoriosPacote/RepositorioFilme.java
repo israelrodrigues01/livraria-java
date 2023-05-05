@@ -16,7 +16,20 @@ public class RepositorioFilme {
 		
 	}
 	
-	public void deleteFilme() {
+	public void deleteFilme(int id) {
+		Filmes filmeParaExcluir = null;
+		for(Filmes f : filme ) {
+			if (f.getId() == id) {
+				filmeParaExcluir = f;
+				break;
+			}
+		}
+		if (filmeParaExcluir != null) {
+			filme.remove(filmeParaExcluir);
+			
+		}else {
+			System.out.println("Filme não encontrado");
+		}
 		
 	}
 	

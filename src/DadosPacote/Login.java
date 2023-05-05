@@ -1,6 +1,5 @@
 package DadosPacote;
 
-import DadosPacote.UsuarioDAO;
 import RepositoriosPacote.*;
 
 import java.util.Scanner;

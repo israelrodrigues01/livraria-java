@@ -463,5 +463,7 @@ public class SistemaTeste {
 			}
 
 		} while (run);
+
+		input.close();
 	}
 }

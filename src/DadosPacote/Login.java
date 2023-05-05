@@ -25,17 +25,25 @@ public class Login {
 				+ "\n| Login |\n"
 				+ "---------\n\n"
 				+ "\nDigite seu email: ");
-		email = input.nextLine();
+		do {
+			email = input.nextLine();
+		} while (email == "");
 
 		if (verificar.isEmail(usuarios, email)) {
 			System.out.println("\nDigite sua senha: ");
-			senha = input.nextLine();
+			do {
+				senha = input.nextLine();
+			} while (senha == "");
 
 			while (!(verificar.verificarSenha(usuarios, senha))) {
 				if (count < 5) {
-					System.out.println("\nPor favor, digite a senha novamente: ");
+					console.limpar();
+					System.out.println("----------------------------------------"
+							+ "\n| Por favor, digite a senha novamente: |\n"
+							+ "----------------------------------------\n\n");
 					senha = input.nextLine();
 				} else {
+					console.limpar();
 					System.out.println("\nNão foi possivel conectar na sua conta, tente outro momento!");
 					break;
 				}
@@ -47,10 +55,11 @@ public class Login {
 				logado = true;
 			}
 
-			console.limpar();
 		} else {
 			console.limpar();
-			System.out.println("\nCadastre-se antes de fazer Login.");
+			System.out.println("------------------------------------"
+					+ "\n| Cadastre-se antes de fazer Login |\n"
+					+ "------------------------------------\n\n");
 		}
 
 		Usuario user = usuarios.getUserByEmail(email);

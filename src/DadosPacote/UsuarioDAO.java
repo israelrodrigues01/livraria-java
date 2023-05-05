@@ -27,7 +27,9 @@ public class UsuarioDAO {
                 + "\n| Cadastro |\n"
                 + "------------\n\n"
                 + "Digite seu nome: ");
-        nome = input.nextLine();
+        do {
+            nome = input.nextLine();
+        } while (nome == "");
 
         do {
             if (count < 1) {
@@ -35,7 +37,9 @@ public class UsuarioDAO {
             } else {
                 System.out.println("\nNão foi possível acessar com este email, tente usar outro: ");
             }
-            email = input.nextLine();
+            do {
+                email = input.nextLine();
+            } while (email == "");
             count++;
         } while (verificar.isEmail(usuarios, email));
         count = 0;
@@ -63,9 +67,68 @@ public class UsuarioDAO {
         Usuario usuario = new Usuario(idUser, nome, email, senha);
 
         console.limpar();
-        System.out.println("--------------------------------------------------------------------------\n"
-                + "| Cadastro realizado com sucesso, agora faça login para acessar a conta! |\n"
+        System.out.println("--------------------------------------------------------------------------"
+                + "\n| Cadastro realizado com sucesso, agora faça login para acessar a conta! |\n"
                 + "--------------------------------------------------------------------------\n\n");
+
+        return usuario;
+    }
+
+    public Usuario addUser(RepositorioUser usuarios) {
+        String nome;
+        String email;
+        String senha;
+        int permissao;
+        int count = 0;
+
+        console.limpar();
+
+        System.out.println("--------------------------"
+                + "\n| Adicionar Novo Usuário |\n"
+                + "--------------------------\n\n"
+                + "Digite o nome: ");
+        do {
+            nome = input.nextLine();
+        } while (nome == "");
+
+        do {
+            if (count < 1) {
+                System.out.println("\nDigite o melhor email: ");
+            } else {
+                System.out.println("\nNão foi possível adicionar com este email, tente usar outro: ");
+            }
+            do {
+                email = input.nextLine();
+            } while (email == "");
+            count++;
+        } while (verificar.isEmail(usuarios, email));
+
+        System.out.println("\nDigite uma senha: ");
+        senha = input.nextLine();
+
+        count = 0;
+
+        do {
+            if (count < 1) {
+                System.out.println("\nPermissão do usuário:");
+            } else {
+                System.out.println("\nPor favor, Permissão do usuário só com os valores:");
+            }
+            System.out.print(""
+                    + "\n0 - Usuário normal"
+                    + "\n1 - Admin");
+            permissao = input.nextInt();
+            count++;
+        } while (permissao < 0 || permissao > 1);
+
+        idUser += 1;
+        Usuario usuario = new Usuario(idUser, nome, email, senha);
+        usuario.setPermissao(permissao);
+
+        console.limpar();
+        System.out.println("---------------------------------"
+                + "\n| Usuário inserido com sucesso! |\n"
+                + "---------------------------------\n\n");
 
         return usuario;
     }
@@ -98,10 +161,14 @@ public class UsuarioDAO {
             }
 
             System.out.println("Digite sua senha: ");
-            senha = input.nextLine();
+            do {
+                senha = input.nextLine();
+            } while (senha == "");
 
             System.out.println("\nConfirme sua senha: ");
-            confirmSenha = input.nextLine();
+            do {
+                confirmSenha = input.nextLine();
+            } while (confirmSenha == "");
 
             count++;
         } while (!senha.equals(confirmSenha));

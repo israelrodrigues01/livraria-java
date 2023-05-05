@@ -1,54 +1,81 @@
 package DadosPacote;
 
+import RepositoriosPacote.*;
+
 import java.util.Scanner;
 
 public class Login {
+
+	Verificacoes verificar = new Verificacoes();
+	UsuarioDAO usuarioDao = new UsuarioDAO();
 
 	Scanner input = new Scanner(System.in);
 	LimparConsole console = new LimparConsole();
 
 	private boolean logado = false;
 
-	public void acessar() {
-		System.out.println("acessar!");
-		console.clear();
+	public Usuario acessar(RepositorioUser usuarios) {
+		String email, senha;
+		int count = 0;
 
-		this.logado = true;
-	}
+		console.limpar();
 
-	public void cadastro() {
-		System.out.println("Digite seu nome: ");
-		String nome = input.nextLine();
+		System.out.println("---------"
+				+ "\n| Login |\n"
+				+ "---------\n\n"
+				+ "\nDigite seu email: ");
+		do {
+			email = input.nextLine();
+		} while (email == "");
 
-		System.out.println("Digite seu melhor email: ");
-		String email = input.nextLine();
+		if (verificar.isEmail(usuarios, email)) {
+			System.out.println("\nDigite sua senha: ");
+			do {
+				senha = input.nextLine();
+			} while (senha == "");
 
-		System.out.println("Digite sua senha: ");
-		String senha = input.nextLine();
+			while (!(verificar.verificarSenha(usuarios, senha))) {
+				if (count < 5) {
+					console.limpar();
+					System.out.println("----------------------------------------"
+							+ "\n| Por favor, digite a senha novamente: |\n"
+							+ "----------------------------------------\n\n");
+					senha = input.nextLine();
+				} else {
+					console.limpar();
+					System.out.println("\nNão foi possivel conectar na sua conta, tente outro momento!");
+					break;
+				}
 
-		System.out.println("Confirme sua senha: ");
-		String confirmSenha = input.nextLine();
+				count++;
+			}
 
-		while (!senha.equals(confirmSenha)) {
-			System.out.println("\n\nSenhas diferentes, tente novamente:\n\n" + "Nome digitado: " + nome
-					+ "\nEmail digitado: " + email+"\n\n");
+			if (count < 5) {
+				logado = true;
+			}
 
-			System.out.println("Digite sua senha: ");
-			senha = input.nextLine();
-
-			System.out.println("Confirme sua senha: ");
-			confirmSenha = input.nextLine();
+		} else {
+			console.limpar();
+			System.out.println("------------------------------------"
+					+ "\n| Cadastre-se antes de fazer Login |\n"
+					+ "------------------------------------\n\n");
 		}
 
-		Usuario usuario = new Usuario(nome, email, senha);
-		
+		Usuario user = usuarios.getUserByEmail(email);
 
-		console.clear();
-		// this.acessar();
+		return user;
+	}
+
+	public Usuario cadastro(RepositorioUser usuarios) {
+		return usuarioDao.cadastro(usuarios);
 	}
 
 	public boolean isLogado() {
 		return this.logado;
+	}
+
+	public void logout() {
+		this.logado = false;
 	}
 
 }

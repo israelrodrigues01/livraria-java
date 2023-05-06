@@ -43,7 +43,9 @@ public class Login {
 					senha = input.nextLine();
 				} else {
 					console.limpar();
-					System.out.println("\nNão foi possivel conectar na sua conta, tente outro momento!");
+					System.out.println("----------------------------------------------------------------"
+							+ "\n| Não foi possivel conectar na sua conta, tente outro momento! |\n"
+							+ "----------------------------------------------------------------\n\n");
 					break;
 				}
 

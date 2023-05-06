@@ -9,13 +9,15 @@ public class SistemaTeste {
 	public static void main(String[] args) {
 
 		// Classes
-		LimparConsole console = new LimparConsole();
 		Menus menu = new Menus();
 		Login login = new Login();
+		FilmesDAO filmesDAO = new FilmesDAO();
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		LimparConsole console = new LimparConsole();
 
 		// Repositorios
 		RepositorioUser usuario = new RepositorioUser();
-		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		RepositorioFilme filmes = new RepositorioFilme();
 
 		// Libs
 		Scanner input = new Scanner(System.in);
@@ -114,7 +116,7 @@ public class SistemaTeste {
 
 									number = input.nextInt();
 
-									mensagem = usuarioDAO.opcoesEditarUset(number, userLogado, usuario);
+									mensagem = usuarioDAO.opcoesEditarUser(number, userLogado, usuario);
 
 									if (mensagem == "sair")
 										sair = true;
@@ -183,10 +185,12 @@ public class SistemaTeste {
 
 									number = input.nextInt();
 
-									mensagem = usuarioDAO.opcoesEditarUset(number, userLogado, usuario);
+									mensagem = usuarioDAO.opcoesEditarUser(number, userLogado, usuario);
 
-									if (mensagem == "sair")
+									if (mensagem == "sair") {
+										mensagem = "";
 										sair = true;
+									}
 
 								} while (!sair);
 
@@ -285,11 +289,13 @@ public class SistemaTeste {
 
 													number = input.nextInt();
 
-													mensagem = usuarioDAO.opcoesEditarUset(number, userAtualizar,
+													mensagem = usuarioDAO.opcoesEditarUser(number, userAtualizar,
 															usuario);
 
 													sairAtualizarUser = true;
 												} else {
+													mensagem = "";
+
 													System.out.println("Deseja tentar novamente ou sair?"
 															+ "\n1 - Tentar Novamente"
 															+ "\n2 - Sair");
@@ -354,8 +360,15 @@ public class SistemaTeste {
 
 												if (userAtualizar != null) {
 													usuario.deleteUser(userAtualizar);
+
+													mensagem = "--------------------"
+															+ "\n| Usuário Removido |\n"
+															+ "--------------------";
+
 													sairRemoverUser = true;
 												} else {
+													mensagem = "";
+
 													System.out.println("Deseja tentar novamente ou sair?"
 															+ "\n1 - Tentar Novamente"
 															+ "\n2 - Sair");
@@ -366,10 +379,6 @@ public class SistemaTeste {
 												}
 
 											} while (!sairRemoverUser);
-
-											mensagem = "--------------------"
-													+ "\n| Usuário Removido |\n"
-													+ "--------------------";
 											break;
 										}
 										case 5: {
@@ -401,12 +410,25 @@ public class SistemaTeste {
 
 									switch (number) {
 										case 1: {
-											console.limpar();
-											mensagem = "Listar Filmes";
+											boolean sairListaFilmes = false;
+											do {
+												console.limpar();
+												System.out.println(filmes.getAllFilmes());
+
+												System.out.println("\n1 - Voltar");
+												number = input.nextInt();
+
+												if (number == 1) {
+													sairListaFilmes = true;
+												}
+											} while (!sairListaFilmes);
 											break;
 										}
 										case 2: {
 											console.limpar();
+
+											filmes.addFilme(filmesDAO.addFilme(filmes));
+
 											mensagem = "--------------------"
 													+ "\n| Filme Adicionado |\n"
 													+ "--------------------";
@@ -414,16 +436,153 @@ public class SistemaTeste {
 										}
 										case 3: {
 											console.limpar();
-											mensagem = "--------------------"
-													+ "\n| Filme Atualizado |\n"
-													+ "--------------------";
+											int idFilme, opcao;
+											String nome;
+											Filmes filmeAtualizar = null;
+											boolean sairEditarFilme = false;
+
+											do {
+												do {
+													console.limpar();
+
+													System.out.println("Deseja pesquisar por id ou nome?"
+															+ "\n1 - Id"
+															+ "\n2 - Nome");
+
+													opcao = input.nextInt();
+
+													if (opcao == 1) {
+														console.limpar();
+
+														System.out.println("Digite o id do filme: ");
+
+														do {
+															idFilme = input.nextInt();
+														} while (idFilme < 0);
+
+														if (filmes.getFilmeById(idFilme) != null) {
+															filmeAtualizar = filmes.getFilmeById(idFilme);
+														} else {
+															console.limpar();
+															System.out.println("------------------------"
+																	+ "\n| Filme não encontrado |\n"
+																	+ "------------------------\n\n");
+														}
+
+													} else if (opcao == 2) {
+														console.limpar();
+														System.out.println("Digite o nome do filme: ");
+														do {
+															nome = input.nextLine();
+														} while (nome == "");
+
+														if (filmes.getFilmeByNome(nome) != null) {
+															filmeAtualizar = filmes.getFilmeByNome(nome);
+														} else {
+															console.limpar();
+															System.out.println("------------------------"
+																	+ "\n| Filme não encontrado |\n"
+																	+ "------------------------\n\n");
+														}
+													}
+												} while (opcao < 1 || opcao > 2);
+
+												if (filmeAtualizar != null) {
+													console.limpar();
+													menu.editFilmeMenu();
+
+													number = input.nextInt();
+
+													mensagem = filmesDAO.opcoesEditarFilmes(number, filmeAtualizar,
+															filmes);
+
+													sairEditarFilme = true;
+												} else {
+													System.out.println("Deseja tentar novamente ou sair?"
+															+ "\n1 - Tentar Novamente"
+															+ "\n2 - Sair");
+
+													opcao = input.nextInt();
+
+													if (opcao == 2)
+														sairEditarFilme = true;
+												}
+											} while (!sairEditarFilme);
+
 											break;
 										}
 										case 4: {
 											console.limpar();
-											mensagem = "------------------"
-													+ "\n| Filme Removido |\n"
-													+ "------------------";
+											int idFilme, opcao;
+											String nome;
+											Filmes filmeRemover = null;
+											boolean sairRemoverFilme = false;
+
+											do {
+												do {
+													console.limpar();
+
+													System.out.println("Deseja pesquisar por id ou nome?"
+															+ "\n1 - Id"
+															+ "\n2 - Nome");
+
+													opcao = input.nextInt();
+
+													if (opcao == 1) {
+														console.limpar();
+
+														System.out.println("Digite o id do filme: ");
+
+														do {
+															idFilme = input.nextInt();
+														} while (idFilme < 0);
+
+														if (filmes.getFilmeById(idFilme) != null) {
+															filmeRemover = filmes.getFilmeById(idFilme);
+														} else {
+															console.limpar();
+															System.out.println("------------------------"
+																	+ "\n| Filme não encontrado |\n"
+																	+ "------------------------\n\n");
+														}
+
+													} else if (opcao == 2) {
+														console.limpar();
+														System.out.println("Digite o nome do filme: ");
+														do {
+															nome = input.nextLine();
+														} while (nome == "");
+
+														if (filmes.getFilmeByNome(nome) != null) {
+															filmeRemover = filmes.getFilmeByNome(nome);
+														} else {
+															console.limpar();
+															System.out.println("------------------------"
+																	+ "\n| Filme não encontrado |\n"
+																	+ "------------------------\n\n");
+														}
+													}
+												} while (opcao < 1 || opcao > 2);
+
+												if (filmeRemover != null) {
+													filmes.deleteFilme(filmeRemover);
+													mensagem = "------------------"
+															+ "\n| Filme Removido |\n"
+															+ "------------------";
+
+													sairRemoverFilme = true;
+												} else {
+													mensagem = "";
+													System.out.println("Deseja tentar novamente ou sair?"
+															+ "\n1 - Tentar Novamente"
+															+ "\n2 - Sair");
+
+													opcao = input.nextInt();
+
+													if (opcao == 2)
+														sairRemoverFilme = true;
+												}
+											} while (!sairRemoverFilme);
 											break;
 										}
 										case 5: {

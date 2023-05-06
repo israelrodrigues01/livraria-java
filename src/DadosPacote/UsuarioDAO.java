@@ -73,52 +73,6 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public String opcoesEditarUset(int opcao, Usuario user, RepositorioUser usuarios) {
-        String mensagem = "";
-        switch (opcao) {
-            case 1: {
-                console.limpar();
-                this.editarNome(user);
-                mensagem = "----------------"
-                        + "\n| Nome editado |\n"
-                        + "----------------";
-                break;
-            }
-            case 2: {
-                console.limpar();
-                this.editarEmail(user, usuarios);
-                mensagem = "-----------------"
-                        + "\n| Email editado |\n"
-                        + "-----------------";
-                break;
-            }
-            case 3: {
-                console.limpar();
-                this.editarSenha(user);
-                mensagem = "-----------------"
-                        + "\n| Senha editada |\n"
-                        + "-----------------";
-                break;
-            }
-            case 4: {
-                console.limpar();
-                this.editarUser(user, usuarios);
-                break;
-            }
-            case 5: {
-                mensagem = "sair";
-                console.limpar();
-                break;
-            }
-            default: {
-                System.out.println("Opção invalida");
-                break;
-            }
-        }
-
-        return mensagem;
-    }
-
     public Usuario addUser(RepositorioUser usuarios) {
         String nome;
         String email;
@@ -244,5 +198,51 @@ public class UsuarioDAO {
         this.editarEmail(user, usuarios);
         System.out.println("\n");
         this.editarSenha(user);
+    }
+
+    public String opcoesEditarUser(int opcao, Usuario user, RepositorioUser usuarios) {
+        String mensagem = "";
+        switch (opcao) {
+            case 1: {
+                console.limpar();
+                this.editarNome(user);
+                mensagem = "----------------"
+                        + "\n| Nome editado |\n"
+                        + "----------------";
+                break;
+            }
+            case 2: {
+                console.limpar();
+                this.editarEmail(user, usuarios);
+                mensagem = "-----------------"
+                        + "\n| Email editado |\n"
+                        + "-----------------";
+                break;
+            }
+            case 3: {
+                console.limpar();
+                this.editarSenha(user);
+                mensagem = "-----------------"
+                        + "\n| Senha editada |\n"
+                        + "-----------------";
+                break;
+            }
+            case 4: {
+                console.limpar();
+                this.editarUser(user, usuarios);
+                break;
+            }
+            case 5: {
+                mensagem = "sair";
+                console.limpar();
+                break;
+            }
+            default: {
+                System.out.println("Opção invalida");
+                break;
+            }
+        }
+
+        return mensagem;
     }
 }

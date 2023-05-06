@@ -63,4 +63,17 @@ public class Menus {
 				+ "\n4 - Editar tudo"
 				+ "\n5 - Voltar");
 	}
+
+	public void editFilmeMenu() {
+		System.out.println("------------------"
+				+ "\n| Editar Filme |\n"
+				+ "------------------\n\n"
+				+ "\n1 - Editar nome"
+				+ "\n2 - Editar genero"
+				+ "\n3 - Editar descricao"
+				+ "\n4 - Editar quantidade"
+				+ "\n5 - Editar situacao"
+				+ "\n6 - Editar tudo"
+				+ "\n7 - Voltar");
+	}
 }

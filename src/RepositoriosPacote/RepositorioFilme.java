@@ -5,48 +5,58 @@ import DadosPacote.Filmes;
 import java.util.ArrayList;
 
 public class RepositorioFilme {
-	
+
 	ArrayList<Filmes> filme = new ArrayList<Filmes>();
 
 	public void addFilme(Filmes filme) {
 		this.filme.add(filme);
 	}
-	
+
 	public void updateFilme() {
-		
+
 	}
-	
-	public void deleteFilme(int id) {
-		Filmes filmeParaExcluir = null;
-		for(Filmes f : filme ) {
-			if (f.getId() == id) {
-				filmeParaExcluir = f;
-				break;
+
+	public void deleteFilme(Filmes filme) {
+		this.filme.remove(filme);
+	}
+
+	public ArrayList<Filmes> getArrayFilmes() {
+		return this.filme;
+	}
+
+	public String getAllFilmes() {
+		String result = "-------------------"
+				+ "\n| Lista de Filmes |\n"
+				+ "-------------------\n\n";
+
+		for (Filmes filme : this.filme) {
+			result += filme.toString() + "\n";
+		}
+
+		return result;
+	}
+
+	public Filmes getFilmeByNome(String nome) {
+		Filmes filmeProcurado = null;
+
+		for (Filmes f : filme) {
+			if (nome.equals(f.getNome())) {
+				filmeProcurado = f;
 			}
 		}
-		if (filmeParaExcluir != null) {
-			filme.remove(filmeParaExcluir);
-			
-		}else {
-			System.out.println("Filme não encontrado");
+
+		return filmeProcurado;
+	}
+
+	public Filmes getFilmeById(int id) {
+		Filmes filmeProcurado = null;
+
+		for (Filmes f : filme) {
+			if (f.getId() == id) {
+				filmeProcurado = f;
+			}
 		}
-		
+
+		return filmeProcurado;
 	}
-	
-	public String getAllFilmes() {
-		String result = "";
-		
-		for(Filmes filme: this.filme) {
-			result += filme.toString() + ""
-					+ "-----------------------"
-					+ "\n\n\n" ;
-		}
-		
-		return "Lista de filmes \n" + result;
-	}
-	
-	public void getFilmeById() {
-		
-	}
-	
 }

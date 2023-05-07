@@ -113,7 +113,7 @@ public class SistemaTeste {
 												System.out.println("---------------"
 														+ "\n| Meus Filmes |\n"
 														+ "---------------\n\n"
-														+ meusFilmes.getAllFilmes()
+														+ meusFilmes.getAllFilmes(userLogado.getId())
 														+ "\n1 - Voltar");
 												opcao = input.nextInt();
 
@@ -139,7 +139,8 @@ public class SistemaTeste {
 												if (filmes.getFilmeByNome(nome) != null) {
 													filmeComprar = filmes.getFilmeByNome(nome);
 													if (filmeComprar.getSituaticao() == 1) {
-														if (filmeComprar != meusFilmes.getFilmeByNome(nome)) {
+														if (filmeComprar != meusFilmes
+																.getFilmeById(userLogado.getId())) {
 															console.limpar();
 															System.out.println("--------------------"
 																	+ "\n| Filme Encontrado |\n"
@@ -155,9 +156,13 @@ public class SistemaTeste {
 															escolhaCompra = input.nextInt();
 
 															if (escolhaCompra == 1) {
-																meusFilmes.addFilme(filmeComprar);
+																meusFilmes.addFilme(filmeComprar, userLogado.getId());
 																filmesDAO.filmeComprado(filmeComprar, filmes);
 															} else {
+																console.limpar();
+																System.out.println("--------------------------"
+																		+ "\n| Aaah não foi dessa vez |\n"
+																		+ "--------------------------\n\n");
 																filmeComprar = null;
 															}
 														} else {
@@ -270,14 +275,147 @@ public class SistemaTeste {
 					} while (login.isLogado());
 				} else if (userLogado.getPermissao() == 1) {
 					do {
-
+						boolean sairLoja = false;
 						console.limpar();
 						menu.userMenu(userLogado.getPermissao());
 						number = input.nextInt();
 
 						switch (number) {
 							case 1: {
-								System.out.println("Listagem dos filmes");
+								do {
+									console.limpar();
+									menu.lojaMenu();
+									int opcaoLoja = input.nextInt();
+
+									switch (opcaoLoja) {
+										case 1: {
+											int opcao;
+											boolean sairListaFilmes = false;
+											do {
+												console.limpar();
+												System.out.println("----------------------"
+														+ "\n| Filmes Disponíveis |\n"
+														+ "----------------------\n\n"
+														+ filmes.getAllFilmesBySituation(1)
+														+ "\n1 - Voltar");
+
+												opcao = input.nextInt();
+
+												if (opcao == 1)
+													sairListaFilmes = true;
+
+											} while (!sairListaFilmes);
+
+											break;
+										}
+										case 2: {
+											int opcao;
+											boolean sairMeusFilmes = false;
+											do {
+												console.limpar();
+												System.out.println("---------------"
+														+ "\n| Meus Filmes |\n"
+														+ "---------------\n\n"
+														+ meusFilmes.getAllFilmes(userLogado.getId())
+														+ "\n1 - Voltar");
+												opcao = input.nextInt();
+
+												if (opcao == 1)
+													sairMeusFilmes = true;
+
+											} while (!sairMeusFilmes);
+											break;
+										}
+										case 3: {
+											int opcao, escolhaCompra;
+											String nome = "";
+											Filmes filmeComprar = null;
+											boolean sairCompra = false;
+
+											do {
+												console.limpar();
+												System.out.println("Pesquise pelo o nome do filme: ");
+												do {
+													nome = input.nextLine();
+												} while (nome == "");
+
+												if (filmes.getFilmeByNome(nome) != null) {
+													filmeComprar = filmes.getFilmeByNome(nome);
+													if (filmeComprar.getSituaticao() == 1) {
+														if (filmeComprar != meusFilmes.getFilmeByNome(nome)) {
+															console.limpar();
+															System.out.println("--------------------"
+																	+ "\n| Filme Encontrado |\n"
+																	+ "--------------------\n\n"
+																	+ "Nome: " + filmeComprar.getNome()
+																	+ "\nGênero: " + filmeComprar.getGenero()
+																	+ "\nDescrição: " + filmeComprar.getDescricao()
+																	+ "\n\n"
+																	+ "\nDeseja comprá-lo?"
+																	+ "\n1 - Sim"
+																	+ "\n2 - Não");
+
+															escolhaCompra = input.nextInt();
+
+															if (escolhaCompra == 1) {
+																meusFilmes.addFilme(filmeComprar, userLogado.getId());
+																filmesDAO.filmeComprado(filmeComprar, filmes);
+															} else {
+																console.limpar();
+																System.out.println("--------------------------"
+																		+ "\n| Aaah não foi dessa vez |\n"
+																		+ "--------------------------\n\n");
+																filmeComprar = null;
+															}
+														} else {
+															console.limpar();
+															System.out.println("------------------------------"
+																	+ "\n| Este filme já foi comprado |\n"
+																	+ "------------------------------\n\n");
+															filmeComprar = null;
+														}
+													} else {
+														console.limpar();
+														System.out.println("-----------------------------------------"
+																+ "\n| Não foi dessa vez, o que deseja fazer |\n"
+																+ "-----------------------------------------\n\n");
+														filmeComprar = null;
+													}
+												} else {
+													console.limpar();
+													System.out.println("------------------------"
+															+ "\n| Filme não encontrado |\n"
+															+ "------------------------\n\n");
+												}
+
+												if (filmeComprar != null) {
+													console.limpar();
+													System.out.println("------------------"
+															+ "\n| Filme Comprado |\n"
+															+ "------------------\n\n");
+												}
+
+												System.out.println("1 - Voltar"
+														+ "\n2 - Pesquisar Novamente");
+												opcao = input.nextInt();
+
+												if (opcao == 1)
+													sairCompra = true;
+
+											} while (!sairCompra);
+
+											break;
+										}
+										case 4: {
+											sairLoja = true;
+											break;
+										}
+										default: {
+											System.out.println("Opção inválida!");
+											break;
+										}
+									}
+								} while (!sairLoja);
 								break;
 							}
 							case 2: {

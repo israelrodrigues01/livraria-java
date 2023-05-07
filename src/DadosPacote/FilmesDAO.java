@@ -16,7 +16,7 @@ public class FilmesDAO {
         String nome;
         String genero;
         String descricao;
-        int quantidade, count = 0;
+        int count = 0;
 
         console.limpar();
 
@@ -50,19 +50,9 @@ public class FilmesDAO {
             descricao = input.nextLine();
         } while (descricao == "");
 
-        System.out.println("\nQuantidade deste filme?");
-        do {
-            if (count > 0) {
-                System.out.println("\nPor favor, adicione uma quantidade valida: ");
-            }
-
-            quantidade = input.nextInt();
-            count++;
-        } while (quantidade < 1);
-
         idFilme += 1;
 
-        Filmes newFilme = new Filmes(idFilme, nome, genero, descricao, quantidade, 1);
+        Filmes newFilme = new Filmes(idFilme, nome, genero, descricao, 1);
 
         return newFilme;
     }
@@ -110,22 +100,6 @@ public class FilmesDAO {
         filme.setDescricao(descricao);
     }
 
-    public void editarQuantidade(Filmes filme) {
-        int quantidade, count = 0;
-
-        System.out.println("\nNova quantidade do filme?");
-        do {
-            if (count > 1) {
-                System.out.println("\nPor favor, adicione uma quantidade valida: ");
-            }
-
-            quantidade = input.nextInt();
-            count++;
-        } while (quantidade < 0);
-
-        filme.setQuantidade(quantidade);
-    }
-
     public void editarSituacao(Filmes filme) {
         int situacao, count = 0;
 
@@ -152,7 +126,6 @@ public class FilmesDAO {
         this.editarNome(filme, filmes);
         this.editarGenero(filme);
         this.editarDescricao(filme);
-        this.editarQuantidade(filme);
         this.editarSituacao(filme);
     }
 
@@ -181,23 +154,17 @@ public class FilmesDAO {
             }
             case 4: {
                 console.limpar();
-                this.editarQuantidade(filme);
+                this.editarSituacao(filme);
                 mensagem = "";
                 break;
             }
             case 5: {
                 console.limpar();
-                this.editarSituacao(filme);
-                mensagem = "";
-                break;
-            }
-            case 6: {
-                console.limpar();
                 this.editarFilme(filme, filmes);
                 mensagem = "";
                 break;
             }
-            case 7: {
+            case 6: {
                 mensagem = "sair";
                 console.limpar();
                 break;
@@ -211,15 +178,7 @@ public class FilmesDAO {
         return mensagem;
     }
 
-    public void filmeComprado(Filmes filme, RepositorioFilme filmes) {
-        int novaQtd;
-        int qtdAtual = filme.getQuantidade();
-
-        if (qtdAtual > 1) {
-            novaQtd = qtdAtual - 1;
-            filme.setQuantidade(novaQtd);
-        } else if (qtdAtual == 1) {
-            filmes.deleteFilme(filme);
-        }
+    public void filmeComprado(Filmes filmeComprar, RepositorioFilme filmes) {
+        filmes.deleteFilme(filmeComprar);
     }
 }

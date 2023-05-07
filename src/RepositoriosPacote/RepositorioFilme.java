@@ -36,6 +36,19 @@ public class RepositorioFilme {
 		return result;
 	}
 
+	public String getAllFilmesBySituation(int situacao) {
+		String result = "";
+
+		for (Filmes f : filme) {
+			if (f.getSituaticao() == situacao) {
+				result += "Nome: " + f.getNome() + "\nGênero: " + f.getGenero() + "\nDescrição: " + f.getDescricao()
+						+ "\n\n";
+			}
+		}
+
+		return result;
+	}
+
 	public Filmes getFilmeByNome(String nome) {
 		Filmes filmeProcurado = null;
 

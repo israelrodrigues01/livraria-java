@@ -14,7 +14,7 @@ public class Menus {
 			System.out.println("------------------"
 					+ "\n| Menu Principal |\n"
 					+ "------------------\n\n"
-					+ "\n1 - Ver filmes"
+					+ "\n1 - Loja"
 					+ "\n2 - Perfil"
 					+ "\n3 - Editar usuário"
 					+ "\n4 - Logout");
@@ -22,13 +22,23 @@ public class Menus {
 			System.out.println("------------------------"
 					+ "\n| Menu Principal ADMIN |\n"
 					+ "------------------------\n\n"
-					+ "\n1 - Ver filmes"
+					+ "\n1 - Loja"
 					+ "\n2 - Perfil"
 					+ "\n3 - Editar usuário"
 					+ "\n4 - CRUD Usuários"
 					+ "\n5 - CRUD Filmes"
 					+ "\n6 - Logout");
 		}
+	}
+
+	public void lojaMenu() {
+		System.out.println("------------------"
+				+ "\n| Loja de Filmes |\n"
+				+ "------------------\n\n"
+				+ "\n1 - Filmes disponíveis"
+				+ "\n2 - Meus filmes"
+				+ "\n3 - Comprar filme"
+				+ "\n4 - Voltar");
 	}
 
 	public void crudUser() {

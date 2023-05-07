@@ -52,13 +52,13 @@ public class FilmesDAO {
 
         System.out.println("\nQuantidade deste filme?");
         do {
-            if (count > 1) {
+            if (count > 0) {
                 System.out.println("\nPor favor, adicione uma quantidade valida: ");
             }
 
             quantidade = input.nextInt();
             count++;
-        } while (quantidade < 0);
+        } while (quantidade < 1);
 
         idFilme += 1;
 
@@ -209,5 +209,17 @@ public class FilmesDAO {
         }
 
         return mensagem;
+    }
+
+    public void filmeComprado(Filmes filme, RepositorioFilme filmes) {
+        int novaQtd;
+        int qtdAtual = filme.getQuantidade();
+
+        if (qtdAtual > 1) {
+            novaQtd = qtdAtual - 1;
+            filme.setQuantidade(novaQtd);
+        } else if (qtdAtual == 1) {
+            filmes.deleteFilme(filme);
+        }
     }
 }

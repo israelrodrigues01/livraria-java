@@ -80,6 +80,8 @@ public class UsuarioDAO {
         int permissao;
         int count = 0;
 
+        Usuario usuario = null;
+
         console.limpar();
 
         System.out.println("--------------------------"
@@ -122,8 +124,12 @@ public class UsuarioDAO {
         } while (permissao < 0 || permissao > 1);
 
         idUser += 1;
-        Usuario usuario = new Usuario(idUser, nome, email, senha);
-        usuario.setPermissao(permissao);
+
+        if (permissao == 0) {
+            usuario = new Usuario(idUser, nome, email, senha);
+        } else {
+            usuario = new Admin(idUser, nome, email, senha);
+        }
 
         console.limpar();
         System.out.println("---------------------------------"
@@ -230,6 +236,9 @@ public class UsuarioDAO {
             case 4: {
                 console.limpar();
                 this.editarUser(user, usuarios);
+                mensagem = "-------------------"
+                        + "\n| Usuário Editado |\n"
+                        + "-------------------";
                 break;
             }
             case 5: {

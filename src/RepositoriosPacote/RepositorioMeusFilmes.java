@@ -1,7 +1,6 @@
 package RepositoriosPacote;
 
 import DadosPacote.Filmes;
-import DadosPacote.Usuario;
 
 import java.util.ArrayList;
 

@@ -30,9 +30,7 @@ public class SistemaTeste {
 
 		Usuario userLogado = null;
 		Usuario user = new Usuario(0, "Cicero israel", "teste@gmail.com", "123");
-		Usuario admin = new Usuario(100, "Admin", "admin@gmail.com", "123");
-		admin.setPermissao(1);
-
+		Admin admin = new Admin(100, "Admin", "admin@gmail.com", "123");
 		usuario.addUser(user);
 		usuario.addUser(admin);
 

@@ -2,18 +2,36 @@ package DadosPacote;
 
 public class Filmes {
 	private int id;
+	private int idComprador;
 	private String nome;
 	private String genero;
 	private String descricao;
-	private int quantidade;
 	private int situaticao;
+
+	Filmes(int id, String nome, String genero, String descricao, int situacao) {
+		this.id = id;
+		this.nome = nome;
+		this.genero = genero;
+		this.descricao = descricao;
+		this.situaticao = situacao;
+	}
 
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
-		this.id = id; 
+		this.id = id;
 	}
+
+	public int getIdComprador() {
+		return idComprador;
+	}
+
+	public void setIdComprador(int idComprador) {
+		this.idComprador = idComprador;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -38,9 +56,17 @@ public class Filmes {
 		this.descricao = descricao;
 	}
 
+	public int getSituaticao() {
+		return situaticao;
+	}
+
+	public void setSituaticao(int situaticao) {
+		this.situaticao = situaticao;
+	}
+
 	@Override
 	public String toString() {
-		return "Filmes [id=" + id + ", nome=" + nome + ", genero=" + genero + ", descricao=" + descricao
-				+ ", quantidade=" + quantidade + ", situaticao=" + situaticao + "]";
+		return "Filme [id= " + id + ", nome= " + nome + ", genero= " + genero + ", descricao= " + descricao
+				+ ", situaticao= " + situaticao + "]";
 	}
 }

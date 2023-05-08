@@ -73,58 +73,14 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public String opcoesEditarUset(int opcao, Usuario user, RepositorioUser usuarios) {
-        String mensagem = "";
-        switch (opcao) {
-            case 1: {
-                console.limpar();
-                this.editarNome(user);
-                mensagem = "----------------"
-                        + "\n| Nome editado |\n"
-                        + "----------------";
-                break;
-            }
-            case 2: {
-                console.limpar();
-                this.editarEmail(user, usuarios);
-                mensagem = "-----------------"
-                        + "\n| Email editado |\n"
-                        + "-----------------";
-                break;
-            }
-            case 3: {
-                console.limpar();
-                this.editarSenha(user);
-                mensagem = "-----------------"
-                        + "\n| Senha editada |\n"
-                        + "-----------------";
-                break;
-            }
-            case 4: {
-                console.limpar();
-                this.editarUser(user, usuarios);
-                break;
-            }
-            case 5: {
-                mensagem = "sair";
-                console.limpar();
-                break;
-            }
-            default: {
-                System.out.println("Opção invalida");
-                break;
-            }
-        }
-
-        return mensagem;
-    }
-
     public Usuario addUser(RepositorioUser usuarios) {
         String nome;
         String email;
         String senha;
         int permissao;
         int count = 0;
+
+        Usuario usuario = null;
 
         console.limpar();
 
@@ -168,8 +124,12 @@ public class UsuarioDAO {
         } while (permissao < 0 || permissao > 1);
 
         idUser += 1;
-        Usuario usuario = new Usuario(idUser, nome, email, senha);
-        usuario.setPermissao(permissao);
+
+        if (permissao == 0) {
+            usuario = new Usuario(idUser, nome, email, senha);
+        } else {
+            usuario = new Admin(idUser, nome, email, senha);
+        }
 
         console.limpar();
         System.out.println("---------------------------------"
@@ -244,5 +204,54 @@ public class UsuarioDAO {
         this.editarEmail(user, usuarios);
         System.out.println("\n");
         this.editarSenha(user);
+    }
+
+    public String opcoesEditarUser(int opcao, Usuario user, RepositorioUser usuarios) {
+        String mensagem = "";
+        switch (opcao) {
+            case 1: {
+                console.limpar();
+                this.editarNome(user);
+                mensagem = "----------------"
+                        + "\n| Nome editado |\n"
+                        + "----------------";
+                break;
+            }
+            case 2: {
+                console.limpar();
+                this.editarEmail(user, usuarios);
+                mensagem = "-----------------"
+                        + "\n| Email editado |\n"
+                        + "-----------------";
+                break;
+            }
+            case 3: {
+                console.limpar();
+                this.editarSenha(user);
+                mensagem = "-----------------"
+                        + "\n| Senha editada |\n"
+                        + "-----------------";
+                break;
+            }
+            case 4: {
+                console.limpar();
+                this.editarUser(user, usuarios);
+                mensagem = "-------------------"
+                        + "\n| Usuário Editado |\n"
+                        + "-------------------";
+                break;
+            }
+            case 5: {
+                mensagem = "sair";
+                console.limpar();
+                break;
+            }
+            default: {
+                System.out.println("Opção invalida");
+                break;
+            }
+        }
+
+        return mensagem;
     }
 }

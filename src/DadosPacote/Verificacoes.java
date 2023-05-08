@@ -28,7 +28,15 @@ public class Verificacoes {
 		return false;
 	}
 
-	public boolean verificaFilme() {
-		return true;
+	public boolean verificaNomeFilme(RepositorioFilme filme, String nome) {
+		ArrayList<Filmes> filmes = filme.getArrayFilmes();
+
+		for (Filmes f : filmes) {
+			if (nome.equals(f.getNome())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

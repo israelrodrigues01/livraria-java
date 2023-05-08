@@ -10,25 +10,38 @@ public class Menus {
 	}
 
 	public void userMenu(int permissao) {
-		if (permissao == 0) {
-			System.out.println("------------------"
-					+ "\n| Menu Principal |\n"
-					+ "------------------\n\n"
-					+ "\n1 - Ver filmes"
-					+ "\n2 - Perfil"
-					+ "\n3 - Editar usuário"
-					+ "\n4 - Logout");
-		} else {
-			System.out.println("------------------------"
+		String cabecalho;
+		String opcoes;
+
+		opcoes = "\n1 - Loja"
+				+ "\n2 - Perfil"
+				+ "\n3 - Editar usuário";
+
+		if (permissao == 1) {
+			cabecalho = "------------------------"
 					+ "\n| Menu Principal ADMIN |\n"
-					+ "------------------------\n\n"
-					+ "\n1 - Ver filmes"
-					+ "\n2 - Perfil"
-					+ "\n3 - Editar usuário"
-					+ "\n4 - CRUD Usuários"
+					+ "------------------------\n\n";
+			opcoes += "\n4 - CRUD Usuários"
 					+ "\n5 - CRUD Filmes"
-					+ "\n6 - Logout");
+					+ "\n6 - Logout";
+		} else {
+			cabecalho = "------------------"
+					+ "\n| Menu Principal |\n"
+					+ "------------------\n\n";
+			opcoes += "\n4 - Logout";
 		}
+
+		System.out.println(cabecalho + opcoes);
+	}
+
+	public void lojaMenu() {
+		System.out.println("------------------"
+				+ "\n| Loja de Filmes |\n"
+				+ "------------------\n\n"
+				+ "\n1 - Filmes disponíveis"
+				+ "\n2 - Meus filmes"
+				+ "\n3 - Comprar filme"
+				+ "\n4 - Voltar");
 	}
 
 	public void crudUser() {
@@ -62,5 +75,17 @@ public class Menus {
 				+ "\n3 - Editar senha"
 				+ "\n4 - Editar tudo"
 				+ "\n5 - Voltar");
+	}
+
+	public void editFilmeMenu() {
+		System.out.println("------------------"
+				+ "\n| Editar Filme |\n"
+				+ "------------------\n\n"
+				+ "\n1 - Editar nome"
+				+ "\n2 - Editar genero"
+				+ "\n3 - Editar descricao"
+				+ "\n4 - Editar situacao"
+				+ "\n5 - Editar tudo"
+				+ "\n6 - Voltar");
 	}
 }

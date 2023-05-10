@@ -5,12 +5,12 @@ import RepositoriosPacote.RepositorioFilme;
 import java.util.Scanner;
 
 public class FilmesDAO {
+    private static int idFilme = 0;
+
     Verificacoes verificar = new Verificacoes();
 
     Scanner input = new Scanner(System.in);
     LimparConsole console = new LimparConsole();
-
-    private static int idFilme = 0;
 
     public Filmes addFilme(RepositorioFilme filme) {
         String nome;

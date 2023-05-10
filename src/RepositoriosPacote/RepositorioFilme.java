@@ -12,10 +12,6 @@ public class RepositorioFilme {
 		this.filme.add(filme);
 	}
 
-	public void updateFilme() {
-
-	}
-
 	public void deleteFilme(Filmes filme) {
 		this.filme.remove(filme);
 	}

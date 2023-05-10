@@ -6,13 +6,13 @@ import java.util.Scanner;
 
 public class Login {
 
+	private boolean logado = false;
+
 	Verificacoes verificar = new Verificacoes();
 	UsuarioDAO usuarioDao = new UsuarioDAO();
 
 	Scanner input = new Scanner(System.in);
 	LimparConsole console = new LimparConsole();
-
-	private boolean logado = false;
 
 	public Usuario acessar(RepositorioUser usuarios) {
 		String email, senha;

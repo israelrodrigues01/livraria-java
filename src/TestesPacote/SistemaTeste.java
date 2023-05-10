@@ -124,10 +124,11 @@ public class SistemaTeste {
 										case 3: {
 											int opcao, escolhaCompra;
 											String nome = "";
-											Filmes filmeComprar = null;
 											boolean sairCompra = false;
 
 											do {
+												Filmes filmeComprar = null;
+
 												console.limpar();
 												System.out.println("Pesquise pelo o nome do filme: ");
 												do {
@@ -327,10 +328,11 @@ public class SistemaTeste {
 										case 3: {
 											int opcao, escolhaCompra;
 											String nome = "";
-											Filmes filmeComprar = null;
 											boolean sairCompra = false;
 
 											do {
+												Filmes filmeComprar = null;
+
 												console.limpar();
 												System.out.println("Pesquise pelo o nome do filme: ");
 												do {

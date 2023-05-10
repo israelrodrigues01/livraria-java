@@ -5,13 +5,12 @@ import RepositoriosPacote.RepositorioUser;
 import java.util.Scanner;
 
 public class UsuarioDAO {
+    private static int idUser = 0;
 
     Verificacoes verificar = new Verificacoes();
 
     Scanner input = new Scanner(System.in);
     LimparConsole console = new LimparConsole();
-
-    private static int idUser = 0;
 
     public Usuario cadastro(RepositorioUser usuarios) {
         String nome;

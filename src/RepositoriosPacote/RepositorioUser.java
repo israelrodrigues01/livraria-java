@@ -12,10 +12,6 @@ public class RepositorioUser {
 		this.usuario.add(usuario);
 	}
 
-	public void updateUser() {
-
-	}
-
 	public void deleteUser(Usuario usuario) {
 		this.usuario.remove(usuario);
 	}

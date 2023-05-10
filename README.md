@@ -18,6 +18,9 @@ O administrador faz o controle de todo o sistema, sendo ele responsável por adi
 ### 3. Arquitetura do Sistema	
 Link do diagrama completo: [Diagrama de Classes](https://drive.google.com/file/d/1_opVff3-dNzWFt0lbPhiZfwHVf4PdazW/view?usp=sharing)
 
+Link do documento completo: [Documento](https://docs.google.com/document/d/1zWNy_OLfm_tBKB0inTQ-KMLUPbHrlXdD2ms_IvjqBVk/edit?usp=sharing)
+
+
 O diagrama de classes acima descreve a estrutura que será seguida pelo sistema. O esquema contém as classes Filmes e Usuário, com os seus respectivos atributos e métodos. Atributos e Métodos para as classe Filmes e Usuarios.
 
 Será adicionado, também, as classes de Repositorios, onde serão armazenadas informações sobre os filmes e usuários, como forma de banco de dados e toda a realização do CRUD.

@@ -38,7 +38,7 @@ public class UsuarioDAO {
             do {
                 email = input.nextLine();
             } while (email == "");
-            count++;
+            count++; // 1
         } while (verificar.isEmail(usuarios, email));
         count = 0;
 

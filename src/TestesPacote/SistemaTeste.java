@@ -27,7 +27,6 @@ public class SistemaTeste {
 		int number;
 
 		// Index
-
 		Usuario userLogado = null;
 		Usuario user = new Usuario(0, "Cicero israel", "teste@gmail.com", "123");
 		Admin admin = new Admin(100, "Admin", "admin@gmail.com", "123");
@@ -36,7 +35,6 @@ public class SistemaTeste {
 
 		console.limpar();
 		do {
-
 			do {
 				System.out.println("-----------------------------------"
 						+ "\n| Bem-vindo(a) ao Prime Filmes :) |\n"
@@ -51,7 +49,6 @@ public class SistemaTeste {
 						break;
 					}
 					case 2: {
-
 						usuario.addUser(login.cadastro(usuario));
 						break;
 					}

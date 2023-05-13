@@ -4,7 +4,7 @@ import DadosPacote.Filmes;
 
 import java.util.ArrayList;
 
-public class RepositorioFilme {
+public class RepositorioFilme implements IRepositorioFilme {
 
 	ArrayList<Filmes> filme = new ArrayList<Filmes>();
 

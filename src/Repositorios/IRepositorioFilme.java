@@ -1,10 +1,9 @@
-package RepositoriosPacote;
-
-// Dados
-import DadosPacote.Filmes;
+package Repositorios;
 
 // Libs
 import java.util.ArrayList;
+
+import Negocio.Filmes;
 
 public interface IRepositorioFilme {
     public void addFilme(Filmes filme);
@@ -20,4 +19,6 @@ public interface IRepositorioFilme {
     public Filmes getFilmeByNome(String nome);
 
     public Filmes getFilmeById(int id);
+
+    public Filmes filmeParaComprar(String nome);
 }

@@ -1,10 +1,10 @@
-package RepositoriosPacote;
-
-import DadosPacote.Usuario;
+package Repositorios;
 
 import java.util.ArrayList;
 
-public class RepositorioUser {
+import Negocio.Usuario;
+
+public class RepositorioUser implements IRepositorioUser {
 
 	ArrayList<Usuario> usuario = new ArrayList<Usuario>();
 

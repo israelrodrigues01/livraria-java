@@ -1,8 +1,9 @@
-package DadosPacote;
-
-import RepositoriosPacote.RepositorioUser;
+package Negocio;
 
 import java.util.Scanner;
+
+import IU.LimparConsole;
+import Repositorios.IRepositorioUser;
 
 public class UsuarioDAO {
     private static int idUser = 0;
@@ -12,67 +13,17 @@ public class UsuarioDAO {
     Scanner input = new Scanner(System.in);
     LimparConsole console = new LimparConsole();
 
-    public Usuario cadastro(RepositorioUser usuarios) {
-        String nome;
-        String email;
-        String senha;
-        String confirmSenha;
-        int count = 0;
-
-        console.limpar();
-
-        System.out.println("------------"
-                + "\n| Cadastro |\n"
-                + "------------\n\n"
-                + "Digite seu nome: ");
-        do {
-            nome = input.nextLine();
-        } while (nome == "");
-
-        do {
-            if (count < 1) {
-                System.out.println("\nDigite seu melhor email: ");
-            } else {
-                System.out.println("\nNão foi possível acessar com este email, tente usar outro: ");
-            }
-            do {
-                email = input.nextLine();
-            } while (email == "");
-            count++; // 1
-        } while (verificar.isEmail(usuarios, email));
-        count = 0;
-
-        do {
-            if (count >= 1) {
-                console.limpar();
-                System.out.println("-------------------------------------------------\n"
-                        + "| Senha diferentes, por favor digite novamente! |\n"
-                        + "-------------------------------------------------\n"
-                        + "\nNome informado: " + nome
-                        + "\nEmail informado: " + email);
-            }
-
-            System.out.println("\nDigite sua senha: ");
-            senha = input.nextLine();
-
-            System.out.println("\nConfirme sua senha: ");
-            confirmSenha = input.nextLine();
-
-            count++;
-        } while (!senha.equals(confirmSenha));
-
-        idUser += 1;
-        Usuario usuario = new Usuario(idUser, nome, email, senha);
-
-        console.limpar();
-        System.out.println("--------------------------------------------------------------------------"
-                + "\n| Cadastro realizado com sucesso, agora faça login para acessar a conta! |\n"
-                + "--------------------------------------------------------------------------\n\n");
-
-        return usuario;
+    public void cadastro(IRepositorioUser usuarios, String nome, String email, String senha) {
+        if (!verificar.isEmail(usuarios, email)) {
+            idUser += 1;
+            Usuario usuario = new Usuario(idUser, nome, email, senha);
+            usuarios.addUser(usuario);
+        } else {
+            // Email já existe;
+        }
     }
 
-    public Usuario addUser(RepositorioUser usuarios) {
+    public Usuario addUser(IRepositorioUser usuarios) {
         String nome;
         String email;
         String senha;
@@ -149,7 +100,7 @@ public class UsuarioDAO {
         user.setNome(nome);
     }
 
-    public void editarEmail(Usuario user, RepositorioUser usuarios) {
+    public void editarEmail(Usuario user, IRepositorioUser usuarios) {
         int count = 0;
         String email;
 
@@ -197,7 +148,7 @@ public class UsuarioDAO {
         user.setSenha(senha);
     }
 
-    public void editarUser(Usuario user, RepositorioUser usuarios) {
+    public void editarUser(Usuario user, IRepositorioUser usuarios) {
         this.editarNome(user);
         System.out.println("\n");
         this.editarEmail(user, usuarios);
@@ -205,7 +156,7 @@ public class UsuarioDAO {
         this.editarSenha(user);
     }
 
-    public String opcoesEditarUser(int opcao, Usuario user, RepositorioUser usuarios) {
+    public String opcoesEditarUser(int opcao, Usuario user, IRepositorioUser usuarios) {
         String mensagem = "";
         switch (opcao) {
             case 1: {

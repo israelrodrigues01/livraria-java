@@ -1,8 +1,8 @@
-package RepositoriosPacote;
-
-import DadosPacote.Filmes;
+package Repositorios;
 
 import java.util.ArrayList;
+
+import Negocio.Filmes;
 
 public class RepositorioFilme implements IRepositorioFilme {
 
@@ -67,5 +67,19 @@ public class RepositorioFilme implements IRepositorioFilme {
 		}
 
 		return filmeProcurado;
+	}
+
+	public Filmes filmeParaComprar(String nome) {
+		Filmes filmeComprar = getFilmeByNome(nome);
+
+		if (filmeComprar != null) {
+			if (filmeComprar.getSituaticao() == 1) {
+				return filmeComprar;
+			} else {
+				filmeComprar = null;
+			}
+		}
+
+		return filmeComprar;
 	}
 }

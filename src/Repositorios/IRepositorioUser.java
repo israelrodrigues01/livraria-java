@@ -1,10 +1,9 @@
-package RepositoriosPacote;
-
-// Dados
-import DadosPacote.Usuario;
+package Repositorios;
 
 // Libs
 import java.util.ArrayList;
+
+import Negocio.Usuario;
 
 public interface IRepositorioUser {
 

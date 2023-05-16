@@ -1,8 +1,9 @@
-package DadosPacote;
-
-import RepositoriosPacote.RepositorioFilme;
+package Negocio;
 
 import java.util.Scanner;
+
+import IU.LimparConsole;
+import Repositorios.IRepositorioFilme;
 
 public class FilmesDAO {
     private static int idFilme = 0;
@@ -12,7 +13,7 @@ public class FilmesDAO {
     Scanner input = new Scanner(System.in);
     LimparConsole console = new LimparConsole();
 
-    public Filmes addFilme(RepositorioFilme filme) {
+    public Filmes addFilme(IRepositorioFilme filme) {
         String nome;
         String genero;
         String descricao;
@@ -57,7 +58,7 @@ public class FilmesDAO {
         return newFilme;
     }
 
-    public void editarNome(Filmes filme, RepositorioFilme filmes) {
+    public void editarNome(Filmes filme, IRepositorioFilme filmes) {
         String nome;
         int count = 0;
 
@@ -122,14 +123,14 @@ public class FilmesDAO {
         filme.setSituaticao(situacao);
     }
 
-    public void editarFilme(Filmes filme, RepositorioFilme filmes) {
+    public void editarFilme(Filmes filme, IRepositorioFilme filmes) {
         this.editarNome(filme, filmes);
         this.editarGenero(filme);
         this.editarDescricao(filme);
         this.editarSituacao(filme);
     }
 
-    public String opcoesEditarFilmes(int opcao, Filmes filme, RepositorioFilme filmes) {
+    public String opcoesEditarFilmes(int opcao, Filmes filme, IRepositorioFilme filmes) {
         String mensagem = "";
         switch (opcao) {
             case 1: {
@@ -178,7 +179,7 @@ public class FilmesDAO {
         return mensagem;
     }
 
-    public void filmeComprado(Filmes filmeComprar, RepositorioFilme filmes) {
+    public void filmeComprado(Filmes filmeComprar, IRepositorioFilme filmes) {
         filmes.deleteFilme(filmeComprar);
     }
 }

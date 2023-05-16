@@ -1,4 +1,4 @@
-package DadosPacote;
+package Negocio;
 
 public class Usuario {
 

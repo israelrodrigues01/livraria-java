@@ -21,9 +21,7 @@ public class RepositorioFilme implements IRepositorioFilme {
 	}
 
 	public String getAllFilmes() {
-		String result = "-------------------"
-				+ "\n| Lista de Filmes |\n"
-				+ "-------------------\n\n";
+		String result = "";
 
 		for (Filmes filme : this.filme) {
 			result += filme.toString() + "\n";

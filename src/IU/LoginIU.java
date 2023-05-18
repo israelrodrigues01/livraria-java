@@ -82,7 +82,7 @@ public class LoginIU {
             } while (!senha.equals(confirmSenha));
 
             try {
-                fachada.cadastroConta(nome, email, senha);
+                fachada.cadastroConta(nome, email, senha, 0);
                 sair = true;
             } catch (Exception e) {
                 sair = false;

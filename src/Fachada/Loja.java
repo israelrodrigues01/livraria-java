@@ -9,6 +9,7 @@ public class Loja {
     private IRepositorioFilme filmesRepositorio;
     private RepositorioMeusFilmes meusFilmes;
     private Login login = new Login();
+    private Verificacoes verificar = new Verificacoes();
     private UsuarioDAO usuarioDAO = new UsuarioDAO();
     private FilmesDAO filmesDAO = new FilmesDAO();
 
@@ -16,15 +17,14 @@ public class Loja {
         usersRepositorio = new RepositorioUser();
         filmesRepositorio = new RepositorioFilme();
         meusFilmes = new RepositorioMeusFilmes();
+
+        this.cadastroConta("Cicero israel", "teste@gmail.com", "123", 0);
+        this.cadastroConta("Admin", "admin@gmail.com", "123", 1);
     }
 
     // Negócio Login Start
     public void acessarConta(String email, String senha) {
         login.acessar(usersRepositorio, email, senha);
-    }
-
-    public void cadastroConta(String nome, String email, String senha) {
-        usuarioDAO.cadastro(usersRepositorio, nome, email, senha);
     }
 
     public IRepositorioUser getUsers() {
@@ -45,14 +45,26 @@ public class Loja {
 
     // Negócio Login End
 
-    public String getAll() {
-        return usersRepositorio.getAllUsers();
+    public boolean verificaNomeFilme(String nome) {
+        return verificar.verificaNomeFilme(filmesRepositorio, nome);
     }
 
     // Negócio Filmes Start
 
     public String getAllFilmes() {
         return filmesRepositorio.getAllFilmes();
+    }
+
+    public void addFilme(String name, String gender, String description) {
+        filmesDAO.addFilme(name, gender, description, filmesRepositorio);
+    }
+
+    public void editMovie(int option, Filmes filme) {
+        filmesDAO.opcoesEditarFilmes(option, filme, filmesRepositorio);
+    }
+
+    public void removeMovie(Filmes filme) {
+        filmesDAO.removeMovie(filme, filmesRepositorio);
     }
 
     public String getAllFilmesBySituation(int situation) {
@@ -85,4 +97,36 @@ public class Loja {
         filmesDAO.filmeComprado(filme, filmesRepositorio);
     }
     // Negócio Filmes End
+
+    // Negócio Usuários Start
+
+    public void cadastroConta(String nome, String email, String senha, int permissao) {
+        usuarioDAO.cadastro(usersRepositorio, nome, email, senha, permissao);
+    }
+
+    public String getAllUsers() {
+        return usersRepositorio.getAllUsers();
+    }
+
+    public void editUser(int option) {
+        usuarioDAO.opcoesEditarUser(option, getUserLogado(), usersRepositorio);
+    }
+
+    public void editUsers(int option, Usuario user) {
+        usuarioDAO.opcoesEditarUser(option, user, usersRepositorio);
+    }
+
+    public void removeUsers(Usuario user) {
+        usuarioDAO.removeUser(user, usersRepositorio);
+    }
+
+    public Usuario getUserById(int id) {
+        return usersRepositorio.getUserById(id);
+    }
+
+    public Usuario getUserByEmail(String email) {
+        return usersRepositorio.getUserByEmail(email);
+    }
+
+    // Negócio Usuários End
 }

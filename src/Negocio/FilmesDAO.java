@@ -13,49 +13,16 @@ public class FilmesDAO {
     Scanner input = new Scanner(System.in);
     LimparConsole console = new LimparConsole();
 
-    public Filmes addFilme(IRepositorioFilme filme) {
-        String nome;
-        String genero;
-        String descricao;
-        int count = 0;
+    public void addFilme(String name, String gender, String description, IRepositorioFilme filmes) {
+        if (!verificar.verificaNomeFilme(filmes, name)) {
+            idFilme += 1;
+            Filmes newFilme = new Filmes(idFilme, name, gender, description, 1);
+            filmes.addFilme(newFilme);
+        }
+    }
 
-        console.limpar();
-
-        System.out.println("------------------------"
-                + "\n| Adicionar Novo Filme |\n"
-                + "------------------------\n\n");
-
-        do {
-            if (count < 1) {
-                System.out.println("\nDigite o nome do filme: ");
-            } else {
-                System.out.println("\nNome do filme já usado, tente colocar outro:");
-            }
-
-            do {
-                nome = input.nextLine();
-            } while (nome == "");
-
-            count++;
-        } while (verificar.verificaNomeFilme(filme, nome));
-
-        count = 0;
-
-        System.out.println("\nDigite o gênero do filme:");
-        do {
-            genero = input.nextLine();
-        } while (genero == "");
-
-        System.out.println("\nDigite a descrição do filme (Em poucas linhas):");
-        do {
-            descricao = input.nextLine();
-        } while (descricao == "");
-
-        idFilme += 1;
-
-        Filmes newFilme = new Filmes(idFilme, nome, genero, descricao, 1);
-
-        return newFilme;
+    public void removeMovie(Filmes filme, IRepositorioFilme filmes) {
+        filmes.deleteFilme(filme);
     }
 
     public void editarNome(Filmes filme, IRepositorioFilme filmes) {
@@ -130,44 +97,31 @@ public class FilmesDAO {
         this.editarSituacao(filme);
     }
 
-    public String opcoesEditarFilmes(int opcao, Filmes filme, IRepositorioFilme filmes) {
-        String mensagem = "";
+    public void opcoesEditarFilmes(int opcao, Filmes filme, IRepositorioFilme filmes) {
         switch (opcao) {
             case 1: {
                 console.limpar();
                 this.editarNome(filme, filmes);
-                mensagem = "----------------"
-                        + "\n| Nome editado |\n"
-                        + "----------------";
                 break;
             }
             case 2: {
                 console.limpar();
                 this.editarGenero(filme);
-                mensagem = "";
                 break;
             }
             case 3: {
                 console.limpar();
                 this.editarDescricao(filme);
-                mensagem = "";
                 break;
             }
             case 4: {
                 console.limpar();
                 this.editarSituacao(filme);
-                mensagem = "";
                 break;
             }
             case 5: {
                 console.limpar();
                 this.editarFilme(filme, filmes);
-                mensagem = "";
-                break;
-            }
-            case 6: {
-                mensagem = "sair";
-                console.limpar();
                 break;
             }
             default: {
@@ -175,8 +129,6 @@ public class FilmesDAO {
                 break;
             }
         }
-
-        return mensagem;
     }
 
     public void filmeComprado(Filmes filmeComprar, IRepositorioFilme filmes) {

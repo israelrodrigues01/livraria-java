@@ -45,9 +45,21 @@ public class Loja {
 
     // Negócio Login End
 
-    public boolean verificaNomeFilme(String nome) {
-        return verificar.verificaNomeFilme(filmesRepositorio, nome);
+    // Negócio Verificar Start
+
+    public boolean verificaNomeFilme(String name) {
+        return verificar.verificaNomeFilme(filmesRepositorio, name);
     }
+
+    public boolean isEmail(String name) {
+        return verificar.isEmail(usersRepositorio, name);
+    }
+
+    public boolean verificarSenha(String senha) {
+        return verificar.verificarSenha(usersRepositorio, senha);
+    }
+
+    // Negócio Verificar End
 
     // Negócio Filmes Start
 
@@ -55,7 +67,7 @@ public class Loja {
         return filmesRepositorio.getAllFilmes();
     }
 
-    public void addFilme(String name, String gender, String description) {
+    public void addMovie(String name, String gender, String description) {
         filmesDAO.addFilme(name, gender, description, filmesRepositorio);
     }
 
@@ -90,6 +102,15 @@ public class Loja {
 
     public String getAllMyFilmes(int id) {
         return meusFilmes.getAllFilmes(id);
+    }
+
+    public Filmes getMyFilmeById(int id) {
+        return meusFilmes.getFilmeById(id);
+    }
+
+    public boolean buyMovie(String name) {
+        filmesDAO.buyMovie(name, this.getUserLogado().getId(), filmesRepositorio, meusFilmes);
+        return true;
     }
 
     public void filmeComprado(Filmes filme, int id) {

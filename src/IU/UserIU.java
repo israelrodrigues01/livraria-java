@@ -17,6 +17,7 @@ public class UserIU {
     }
 
     public void listUsers() {
+        console.limpar();
         System.out.println(fachada.getAllUsers());
     }
 
@@ -106,6 +107,7 @@ public class UserIU {
             }
 
         } while (!sair);
+        console.limpar();
         sair = false;
     }
 
@@ -129,18 +131,20 @@ public class UserIU {
     }
 
     public void editUserByEmail(String email) {
+        int opcao;
         do {
             console.limpar();
             menu.editUserMenu();
 
-            number = input.nextInt();
-            if (number == 5) {
-                sair = true;
+            opcao = input.nextInt();
+            if (opcao != 5) {
+                fachada.editUsers(opcao, fachada.getUserByEmail(email));
             } else {
-                fachada.editUsers(number, fachada.getUserByEmail(email));
+                sair = true;
             }
 
         } while (!sair);
+        console.limpar();
         sair = false;
     }
 
@@ -149,18 +153,19 @@ public class UserIU {
     }
 
     public void editUserById(int id) {
+        int opcao;
         do {
             console.limpar();
             menu.editUserMenu();
 
-            number = input.nextInt();
-            if (number == 5) {
-                sair = true;
+            opcao = input.nextInt();
+            if (opcao != 5) {
+                fachada.editUsers(opcao, fachada.getUserById(id));
             } else {
-                fachada.editUsers(number, fachada.getUserById(id));
+                sair = true;
             }
-
         } while (!sair);
+        console.limpar();
         sair = false;
     }
 
@@ -180,6 +185,7 @@ public class UserIU {
                         + "\n1 - Id"
                         + "\n2 - Email");
                 number = input.nextInt();
+
                 if (number == 1) {
                     console.limpar();
                     System.out.println("Digite o id do usuário: ");
@@ -227,11 +233,11 @@ public class UserIU {
                     + "\n1 - Tentar Novamente"
                     + "\n2 - Sair");
             number = input.nextInt();
-
             if (number == 2)
                 sair = true;
 
         } while (!sair);
+        console.limpar();
         sair = false;
     }
 }

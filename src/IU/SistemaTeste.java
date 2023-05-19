@@ -11,12 +11,14 @@ public class SistemaTeste {
 
 		// IU (Interface do Usuário)
 		IndexIU index = new IndexIU(loja);
+		LimparConsole console = new LimparConsole();
 
 		// Libs
 		Scanner input = new Scanner(System.in);
 
 		boolean run = true;
 
+		console.limpar();
 		do {
 			index.login();
 			index.viewUser();

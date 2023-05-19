@@ -131,6 +131,19 @@ public class FilmesDAO {
         }
     }
 
+    public boolean buyMovie(String name, int idComprador, IRepositorioFilme movies, IRepositorioFilme myMovies) {
+        Filmes movie = movies.getFilmeByNome(name);
+        Filmes myMovie = myMovies.getFilmeById(idComprador);
+
+        if (movie != null) {
+            if (movie != myMovie) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void filmeComprado(Filmes filmeComprar, IRepositorioFilme filmes) {
         filmes.deleteFilme(filmeComprar);
     }

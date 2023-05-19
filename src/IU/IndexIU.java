@@ -24,7 +24,6 @@ public class IndexIU {
 
     public void login() {
         do {
-            console.limpar();
             System.out.println("-----------------------------------"
                     + "\n| Bem-vindo(a) ao Prime Filmes :) |\n"
                     + "-----------------------------------");
@@ -171,21 +170,14 @@ public class IndexIU {
                     break;
                 }
                 case 4: {
-                    boolean sair = false;
-                    String mensagem = "";
+                    console.limpar();
                     do {
-                        console.limpar();
-
-                        if (mensagem != "") {
-                            System.out.println(mensagem + "\n\n");
-                        }
 
                         menu.crudUser();
                         number = input.nextInt();
                         switch (number) {
                             case 1: {
                                 do {
-                                    console.limpar();
                                     userIU.listUsers();
 
                                     System.out.println("\n1 - Voltar");
@@ -195,11 +187,11 @@ public class IndexIU {
                                         sair = true;
                                     }
                                 } while (!sair);
+                                console.limpar();
                                 sair = false;
                                 break;
                             }
                             case 2: {
-                                console.limpar();
                                 userIU.addUser();
                                 break;
                             }
@@ -225,14 +217,8 @@ public class IndexIU {
                     break;
                 }
                 case 5: {
-                    String mensagem = "";
+                    console.limpar();
                     do {
-                        console.limpar();
-
-                        if (mensagem != "") {
-                            System.out.println(mensagem + "\n\n");
-                        }
-
                         menu.crudFilme();
 
                         number = input.nextInt();

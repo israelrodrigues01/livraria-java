@@ -15,6 +15,7 @@ public class LoginIU {
 
     public void acessar() {
         String email, senha;
+        int count = 0;
 
         console.limpar();
 
@@ -26,17 +27,40 @@ public class LoginIU {
             email = input.nextLine();
         } while (email == "");
 
-        System.out.println("\nDigite sua senha: ");
-        do {
-            senha = input.nextLine();
-        } while (senha == "");
+        if (fachada.isEmail(email)) {
+            System.out.println("\nDigite sua senha: ");
+            do {
+                senha = input.nextLine();
+            } while (senha == "");
 
-        fachada.acessarConta(email, senha);
+            while (!(fachada.verificarSenha(senha))) {
+                if (count < 5) {
+                    console.limpar();
+                    System.out.println("----------------------------------------"
+                            + "\n| Por favor, digite a senha novamente: |\n"
+                            + "----------------------------------------\n\n");
+                    senha = input.nextLine();
+                } else {
+                    console.limpar();
+                    System.out.println("----------------------------------------------------------------"
+                            + "\n| Não foi possivel conectar na sua conta, tente outro momento! |\n"
+                            + "----------------------------------------------------------------\n\n");
+                    break;
+                }
 
-        // console.limpar();
-        // System.out.println("------------------------------------"
-        // + "\n| Cadastre-se antes de fazer Login |\n"
-        // + "------------------------------------\n\n");
+                count++;
+            }
+
+            if (count < 5) {
+                fachada.acessarConta(email, senha);
+            }
+
+        } else {
+            console.limpar();
+            System.out.println("------------------------------------"
+                    + "\n| Cadastre-se antes de fazer Login |\n"
+                    + "------------------------------------\n\n");
+        }
     }
 
     public void cadastro() {
@@ -84,14 +108,14 @@ public class LoginIU {
             try {
                 fachada.cadastroConta(nome, email, senha, 0);
                 sair = true;
+
+                console.limpar();
+                System.out.println("--------------------------------------------------------------------------"
+                        + "\n| Cadastro realizado com sucesso, agora faça login para acessar a conta! |\n"
+                        + "--------------------------------------------------------------------------\n\n");
             } catch (Exception e) {
                 sair = false;
             }
         } while (!sair);
-
-        console.limpar();
-        System.out.println("--------------------------------------------------------------------------"
-                + "\n| Cadastro realizado com sucesso, agora faça login para acessar a conta! |\n"
-                + "--------------------------------------------------------------------------\n\n");
     }
 }

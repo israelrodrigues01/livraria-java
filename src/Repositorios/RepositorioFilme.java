@@ -1,10 +1,11 @@
-package RepositoriosPacote;
-
-import DadosPacote.Filmes;
+package Repositorios;
 
 import java.util.ArrayList;
 
-public class RepositorioFilme {
+import Excecoes.FilmeNaoEncontradoException;
+import Negocio.Filmes;
+
+public class RepositorioFilme implements IRepositorioFilme {
 
 	ArrayList<Filmes> filme = new ArrayList<Filmes>();
 
@@ -21,9 +22,7 @@ public class RepositorioFilme {
 	}
 
 	public String getAllFilmes() {
-		String result = "-------------------"
-				+ "\n| Lista de Filmes |\n"
-				+ "-------------------\n\n";
+		String result = "";
 
 		for (Filmes filme : this.filme) {
 			result += filme.toString() + "\n";
@@ -45,27 +44,38 @@ public class RepositorioFilme {
 		return result;
 	}
 
-	public Filmes getFilmeByNome(String nome) {
-		Filmes filmeProcurado = null;
+	public Filmes getFilmeByNome(String nome) throws FilmeNaoEncontradoException {
 
 		for (Filmes f : filme) {
 			if (nome.equals(f.getNome())) {
-				filmeProcurado = f;
+				return f;
 			}
 		}
 
-		return filmeProcurado;
+		throw new FilmeNaoEncontradoException();
 	}
 
-	public Filmes getFilmeById(int id) {
-		Filmes filmeProcurado = null;
-
+	public Filmes getFilmeById(int id) throws FilmeNaoEncontradoException {
 		for (Filmes f : filme) {
 			if (f.getId() == id) {
-				filmeProcurado = f;
+				return f;
 			}
 		}
 
-		return filmeProcurado;
+		throw new FilmeNaoEncontradoException();
+	}
+
+	public Filmes filmeParaComprar(String nome) throws FilmeNaoEncontradoException{
+		Filmes filmeComprar = getFilmeByNome(nome);
+
+		if (filmeComprar != null) {
+			if (filmeComprar.getSituaticao() == 1) {
+				return filmeComprar;
+			} else {
+				filmeComprar = null;
+			}
+		}
+
+		return filmeComprar;
 	}
 }

@@ -1,4 +1,4 @@
-package DadosPacote;
+package Negocio;
 
 public class Filmes {
 	private int id;
@@ -67,6 +67,6 @@ public class Filmes {
 	@Override
 	public String toString() {
 		return "Filme [id= " + id + ", nome= " + nome + ", genero= " + genero + ", descricao= " + descricao
-				+ ", situaticao= " + situaticao + "]";
+				+ ", situaticao= " + situaticao + " idComprador: " + idComprador + "]";
 	}
 }

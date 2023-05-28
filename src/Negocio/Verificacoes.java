@@ -1,11 +1,11 @@
-package DadosPacote;
+package Negocio;
 
 import java.util.ArrayList;
 
-import RepositoriosPacote.*;
+import Repositorios.*;
 
 public class Verificacoes {
-	public boolean isEmail(RepositorioUser usuarios, String email) {
+	public boolean isEmail(IRepositorioUser usuarios, String email) {
 
 		ArrayList<Usuario> users = usuarios.getArrayUser();
 
@@ -17,7 +17,7 @@ public class Verificacoes {
 		return false;
 	}
 
-	public boolean verificarSenha(RepositorioUser usuarios, String senha) {
+	public boolean verificarSenha(IRepositorioUser usuarios, String senha) {
 		ArrayList<Usuario> users = usuarios.getArrayUser();
 
 		for (Usuario u : users) {
@@ -28,7 +28,7 @@ public class Verificacoes {
 		return false;
 	}
 
-	public boolean verificaNomeFilme(RepositorioFilme filme, String nome) {
+	public boolean verificaNomeFilme(IRepositorioFilme filme, String nome) {
 		ArrayList<Filmes> filmes = filme.getArrayFilmes();
 
 		for (Filmes f : filmes) {

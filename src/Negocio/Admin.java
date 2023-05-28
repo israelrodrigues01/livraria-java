@@ -1,4 +1,4 @@
-package DadosPacote;
+package Negocio;
 
 public class Admin extends Usuario {
 	public Admin(int id, String nome, String email, String senha) {

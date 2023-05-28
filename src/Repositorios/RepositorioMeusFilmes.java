@@ -1,6 +1,6 @@
-package RepositoriosPacote;
+package Repositorios;
 
-import DadosPacote.Filmes;
+import Negocio.Filmes;
 
 public class RepositorioMeusFilmes extends RepositorioFilme {
 

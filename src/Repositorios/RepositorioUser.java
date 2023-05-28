@@ -1,10 +1,11 @@
-package RepositoriosPacote;
-
-import DadosPacote.Usuario;
+package Repositorios;
 
 import java.util.ArrayList;
 
-public class RepositorioUser {
+import Excecoes.UsuarioNaoEncontradoException;
+import Negocio.Usuario;
+
+public class RepositorioUser implements IRepositorioUser {
 
 	ArrayList<Usuario> usuario = new ArrayList<Usuario>();
 
@@ -31,27 +32,23 @@ public class RepositorioUser {
 		return resultado;
 	}
 
-	public Usuario getUserByEmail(String email) {
-		Usuario user = null;
-
+	public Usuario getUserByEmail(String email) throws UsuarioNaoEncontradoException {
 		for (Usuario u : usuario) {
 			if (u.getEmail().equals(email)) {
-				user = u;
+				return u;
 			}
 		}
 
-		return user;
+		throw new UsuarioNaoEncontradoException();
 	}
 
-	public Usuario getUserById(int id) {
-		Usuario user = null;
-
+	public Usuario getUserById(int id) throws UsuarioNaoEncontradoException {
 		for (Usuario u : usuario) {
 			if (u.getId() == id) {
-				user = u;
+				return u;
 			}
 		}
 
-		return user;
+		throw new UsuarioNaoEncontradoException();
 	}
 }

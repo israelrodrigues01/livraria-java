@@ -172,7 +172,6 @@ public class IndexIU {
                 case 4: {
                     console.limpar();
                     do {
-
                         menu.crudUser();
                         number = input.nextInt();
                         switch (number) {
@@ -229,23 +228,20 @@ public class IndexIU {
                                 break;
                             }
                             case 2: {
-                                console.limpar();
                                 filmeIU.addMovie();
                                 break;
                             }
                             case 3: {
-                                console.limpar();
                                 filmeIU.editMovie(1);
                                 break;
                             }
                             case 4: {
-                                console.limpar();
                                 filmeIU.editMovie(0);
                                 break;
                             }
                             case 5: {
-                                sair = true;
                                 console.limpar();
+                                sair = true;
                                 break;
                             }
                             default: {

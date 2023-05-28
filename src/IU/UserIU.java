@@ -2,6 +2,8 @@ package IU;
 
 import java.util.Scanner;
 
+import Excecoes.UsuarioCadastradoException;
+import Excecoes.UsuarioNaoEncontradoException;
 import Fachada.Loja;
 
 public class UserIU {
@@ -64,12 +66,17 @@ public class UserIU {
             count++;
         } while (permissao < 0 || permissao > 1);
 
-        fachada.cadastroConta(nome, email, senha, permissao);
+        try {
+            fachada.cadastroConta(nome, email, senha, permissao);
 
-        console.limpar();
-        System.out.println("---------------------------------"
-                + "\n| Usuário inserido com sucesso! |\n"
-                + "---------------------------------\n\n");
+            console.limpar();
+            System.out.println("---------------------------------"
+                    + "\n| Usuário inserido com sucesso! |\n"
+                    + "---------------------------------\n\n");
+        } catch (UsuarioCadastradoException e) {
+            console.limpar();
+            System.out.println(e.getMessage());
+        }
     }
 
     public void profile() {
@@ -137,19 +144,26 @@ public class UserIU {
             menu.editUserMenu();
 
             opcao = input.nextInt();
-            if (opcao != 5) {
-                fachada.editUsers(opcao, fachada.getUserByEmail(email));
-            } else {
+            try {
+                if (opcao != 5) {
+                    fachada.editUsers(opcao, fachada.getUserByEmail(email));
+                }
+            } catch (UsuarioNaoEncontradoException e) {
+                console.limpar();
+                System.out.println(e.getMessage());
                 sair = true;
             }
-
         } while (!sair);
-        console.limpar();
         sair = false;
     }
 
     public void removeUserByEmail(String email) {
-        fachada.removeUsers(fachada.getUserByEmail(email));
+        try {
+            fachada.removeUsers(fachada.getUserByEmail(email));
+        } catch (UsuarioNaoEncontradoException e) {
+            console.limpar();
+            System.out.println(e.getMessage());
+        }
     }
 
     public void editUserById(int id) {
@@ -159,18 +173,26 @@ public class UserIU {
             menu.editUserMenu();
 
             opcao = input.nextInt();
-            if (opcao != 5) {
-                fachada.editUsers(opcao, fachada.getUserById(id));
-            } else {
+            try {
+                if (opcao != 5) {
+                    fachada.editUsers(opcao, fachada.getUserById(id));
+                }
+            } catch (UsuarioNaoEncontradoException e) {
+                console.limpar();
+                System.out.println(e.getMessage());
                 sair = true;
             }
         } while (!sair);
-        console.limpar();
         sair = false;
     }
 
     public void removeUserById(int id) {
-        fachada.removeUsers(fachada.getUserById(id));
+        try {
+            fachada.removeUsers(fachada.getUserById(id));
+        } catch (UsuarioNaoEncontradoException e) {
+            console.limpar();
+            System.out.println(e.getMessage());
+        }
     }
 
     public void editUsers(int type) {
@@ -194,17 +216,10 @@ public class UserIU {
                         idUser = input.nextInt();
                     } while (idUser < 0);
 
-                    if (fachada.getUserById(idUser) != null) {
-                        if (action == "edit") {
-                            this.editUserById(idUser);
-                        } else {
-                            this.removeUserById(idUser);
-                        }
+                    if (action == "edit") {
+                        this.editUserById(idUser);
                     } else {
-                        console.limpar();
-                        System.out.println("--------------------------"
-                                + "\n| Usuário não encontrado |\n"
-                                + "--------------------------\n\n");
+                        this.removeUserById(idUser);
                     }
 
                 } else if (number == 2) {
@@ -214,17 +229,10 @@ public class UserIU {
                         emailUser = input.nextLine();
                     } while (emailUser == "");
 
-                    if (fachada.getUserByEmail(emailUser) != null) {
-                        if (action == "edit") {
-                            this.editUserByEmail(emailUser);
-                        } else {
-                            this.removeUserByEmail(emailUser);
-                        }
+                    if (action == "edit") {
+                        this.editUserByEmail(emailUser);
                     } else {
-                        console.limpar();
-                        System.out.println("--------------------------"
-                                + "\n| Usuário não encontrado |\n"
-                                + "--------------------------\n\n");
+                        this.removeUserByEmail(emailUser);
                     }
                 }
             } while (number < 1 || number > 2);

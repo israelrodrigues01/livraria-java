@@ -2,6 +2,8 @@ package Negocio;
 
 import java.util.Scanner;
 
+import Excecoes.FilmeCadastradoException;
+import Excecoes.FilmeNaoEncontradoException;
 import IU.LimparConsole;
 import Repositorios.IRepositorioFilme;
 
@@ -13,11 +15,14 @@ public class FilmesDAO {
     Scanner input = new Scanner(System.in);
     LimparConsole console = new LimparConsole();
 
-    public void addFilme(String name, String gender, String description, IRepositorioFilme filmes) {
+    public void addFilme(String name, String gender, String description, IRepositorioFilme filmes)
+            throws FilmeCadastradoException {
         if (!verificar.verificaNomeFilme(filmes, name)) {
             idFilme += 1;
             Filmes newFilme = new Filmes(idFilme, name, gender, description, 1);
             filmes.addFilme(newFilme);
+        } else {
+            throw new FilmeCadastradoException();
         }
     }
 
@@ -131,9 +136,15 @@ public class FilmesDAO {
         }
     }
 
-    public boolean buyMovie(String name, int idComprador, IRepositorioFilme movies, IRepositorioFilme myMovies) {
+    public boolean buyMovie(String name, int idComprador, IRepositorioFilme movies, IRepositorioFilme myMovies)
+            throws FilmeNaoEncontradoException {
         Filmes movie = movies.getFilmeByNome(name);
-        Filmes myMovie = myMovies.getFilmeById(idComprador);
+        Filmes myMovie = null;;
+        try {
+            myMovie = myMovies.getFilmeById(idComprador);
+        } catch (FilmeNaoEncontradoException e) {
+            myMovies = null;
+        }
 
         if (movie != null) {
             if (movie != myMovie) {

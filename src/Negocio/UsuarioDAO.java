@@ -2,6 +2,7 @@ package Negocio;
 
 import java.util.Scanner;
 
+import Excecoes.UsuarioCadastradoException;
 import IU.LimparConsole;
 import Repositorios.IRepositorioUser;
 
@@ -13,7 +14,8 @@ public class UsuarioDAO {
     Scanner input = new Scanner(System.in);
     LimparConsole console = new LimparConsole();
 
-    public void cadastro(IRepositorioUser usuarios, String nome, String email, String senha, int permissao) {
+    public void cadastro(IRepositorioUser usuarios, String nome, String email, String senha, int permissao)
+            throws UsuarioCadastradoException {
         Usuario usuario = null;
         if (!verificar.isEmail(usuarios, email)) {
             idUser += 1;
@@ -24,7 +26,7 @@ public class UsuarioDAO {
             }
             usuarios.addUser(usuario);
         } else {
-            // Email já existe;
+            throw new UsuarioCadastradoException();
         }
     }
 

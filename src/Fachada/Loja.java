@@ -1,6 +1,7 @@
 package Fachada;
 
 import Negocio.*;
+import Excecoes.*;
 import Repositorios.*;
 
 public class Loja {
@@ -18,12 +19,17 @@ public class Loja {
         filmesRepositorio = new RepositorioFilme();
         meusFilmes = new RepositorioMeusFilmes();
 
-        this.cadastroConta("Cicero israel", "teste@gmail.com", "123", 0);
-        this.cadastroConta("Admin", "admin@gmail.com", "123", 1);
+        try {
+
+            this.cadastroConta("Cicero israel", "teste@gmail.com", "123", 0);
+            this.cadastroConta("Admin", "admin@gmail.com", "123", 1);
+        } catch (UsuarioCadastradoException e) {
+            e.getMessage();
+        }
     }
 
     // Negócio Login Start
-    public void acessarConta(String email, String senha) {
+    public void acessarConta(String email, String senha) throws UsuarioNaoEncontradoException {
         login.acessar(usersRepositorio, email, senha);
     }
 
@@ -67,7 +73,7 @@ public class Loja {
         return filmesRepositorio.getAllFilmes();
     }
 
-    public void addMovie(String name, String gender, String description) {
+    public void addMovie(String name, String gender, String description) throws FilmeCadastradoException {
         filmesDAO.addFilme(name, gender, description, filmesRepositorio);
     }
 
@@ -83,15 +89,15 @@ public class Loja {
         return filmesRepositorio.getAllFilmesBySituation(situation);
     }
 
-    public Filmes getFilmeByNome(String nome) {
+    public Filmes getFilmeByNome(String nome) throws FilmeNaoEncontradoException {
         return filmesRepositorio.getFilmeByNome(nome);
     }
 
-    public Filmes getFilmeById(int id) {
+    public Filmes getFilmeById(int id) throws FilmeNaoEncontradoException {
         return filmesRepositorio.getFilmeById(id);
     }
 
-    public Filmes filmeComprar(String nome) {
+    public Filmes filmeComprar(String nome) throws FilmeNaoEncontradoException {
         return filmesRepositorio.filmeParaComprar(nome);
     }
 
@@ -104,11 +110,11 @@ public class Loja {
         return meusFilmes.getAllFilmes(id);
     }
 
-    public Filmes getMyFilmeById(int id) {
+    public Filmes getMyFilmeById(int id) throws FilmeNaoEncontradoException {
         return meusFilmes.getFilmeById(id);
     }
 
-    public boolean buyMovie(String name) {
+    public boolean buyMovie(String name) throws FilmeNaoEncontradoException {
         filmesDAO.buyMovie(name, this.getUserLogado().getId(), filmesRepositorio, meusFilmes);
         return true;
     }
@@ -121,7 +127,8 @@ public class Loja {
 
     // Negócio Usuários Start
 
-    public void cadastroConta(String nome, String email, String senha, int permissao) {
+    public void cadastroConta(String nome, String email, String senha, int permissao)
+            throws UsuarioCadastradoException {
         usuarioDAO.cadastro(usersRepositorio, nome, email, senha, permissao);
     }
 
@@ -141,11 +148,11 @@ public class Loja {
         usuarioDAO.removeUser(user, usersRepositorio);
     }
 
-    public Usuario getUserById(int id) {
+    public Usuario getUserById(int id) throws UsuarioNaoEncontradoException {
         return usersRepositorio.getUserById(id);
     }
 
-    public Usuario getUserByEmail(String email) {
+    public Usuario getUserByEmail(String email) throws UsuarioNaoEncontradoException {
         return usersRepositorio.getUserByEmail(email);
     }
 

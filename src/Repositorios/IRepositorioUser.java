@@ -3,6 +3,7 @@ package Repositorios;
 // Libs
 import java.util.ArrayList;
 
+import Excecoes.UsuarioNaoEncontradoException;
 import Negocio.Usuario;
 
 public interface IRepositorioUser {
@@ -15,8 +16,8 @@ public interface IRepositorioUser {
 
     public String getAllUsers();
 
-    public Usuario getUserByEmail(String email);
+    public Usuario getUserByEmail(String email) throws UsuarioNaoEncontradoException;
 
-    public Usuario getUserById(int id);
+    public Usuario getUserById(int id) throws UsuarioNaoEncontradoException;
 
 }

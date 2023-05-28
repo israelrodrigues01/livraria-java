@@ -2,6 +2,7 @@ package Repositorios;
 
 import java.util.ArrayList;
 
+import Excecoes.FilmeNaoEncontradoException;
 import Negocio.Filmes;
 
 public class RepositorioFilme implements IRepositorioFilme {
@@ -43,31 +44,28 @@ public class RepositorioFilme implements IRepositorioFilme {
 		return result;
 	}
 
-	public Filmes getFilmeByNome(String nome) {
-		Filmes filmeProcurado = null;
+	public Filmes getFilmeByNome(String nome) throws FilmeNaoEncontradoException {
 
 		for (Filmes f : filme) {
 			if (nome.equals(f.getNome())) {
-				filmeProcurado = f;
+				return f;
 			}
 		}
 
-		return filmeProcurado;
+		throw new FilmeNaoEncontradoException();
 	}
 
-	public Filmes getFilmeById(int id) {
-		Filmes filmeProcurado = null;
-
+	public Filmes getFilmeById(int id) throws FilmeNaoEncontradoException {
 		for (Filmes f : filme) {
 			if (f.getId() == id) {
-				filmeProcurado = f;
+				return f;
 			}
 		}
 
-		return filmeProcurado;
+		throw new FilmeNaoEncontradoException();
 	}
 
-	public Filmes filmeParaComprar(String nome) {
+	public Filmes filmeParaComprar(String nome) throws FilmeNaoEncontradoException{
 		Filmes filmeComprar = getFilmeByNome(nome);
 
 		if (filmeComprar != null) {

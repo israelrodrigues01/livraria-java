@@ -2,6 +2,8 @@ package IU;
 
 import java.util.Scanner;
 
+import Excecoes.FilmeCadastradoException;
+import Excecoes.FilmeNaoEncontradoException;
 import Fachada.Loja;
 
 public class FilmeIU {
@@ -43,35 +45,35 @@ public class FilmeIU {
                 nome = input.nextLine();
             } while (nome == "");
 
-            if (fachada.buyMovie(nome)) {
-                console.limpar();
-                System.out.println("--------------------"
-                        + "\n| Filme Encontrado |\n"
-                        + "--------------------\n\n"
-                        + "Nome: " + fachada.filmeComprar(nome).getNome()
-                        + "\nGênero: " + fachada.filmeComprar(nome).getGenero()
-                        + "\nDescrição: " + fachada.filmeComprar(nome).getDescricao()
-                        + "\n\n"
-                        + "\nDeseja comprá-lo?"
-                        + "\n1 - Sim"
-                        + "\n2 - Não");
-
-                escolhaCompra = input.nextInt();
-
-                if (escolhaCompra == 1) {
-                    fachada.filmeComprado(fachada.getFilmeByNome(nome), fachada.getUserLogado().getId());
+            try {
+                if (fachada.buyMovie(nome)) {
                     console.limpar();
-                } else {
-                    console.limpar();
-                    System.out.println("--------------------------"
-                            + "\n| Aaah não foi dessa vez |\n"
-                            + "--------------------------\n\n");
+                    System.out.println("--------------------"
+                            + "\n| Filme Encontrado |\n"
+                            + "--------------------\n\n"
+                            + "Nome: " + fachada.filmeComprar(nome).getNome()
+                            + "\nGênero: " + fachada.filmeComprar(nome).getGenero()
+                            + "\nDescrição: " + fachada.filmeComprar(nome).getDescricao()
+                            + "\n\n"
+                            + "\nDeseja comprá-lo?"
+                            + "\n1 - Sim"
+                            + "\n2 - Não");
+
+                    escolhaCompra = input.nextInt();
+
+                    if (escolhaCompra == 1) {
+                        fachada.filmeComprado(fachada.getFilmeByNome(nome), fachada.getUserLogado().getId());
+                        console.limpar();
+                    } else {
+                        console.limpar();
+                        System.out.println("--------------------------"
+                                + "\n| Aaah não foi dessa vez |\n"
+                                + "--------------------------\n\n");
+                    }
                 }
-            } else {
+            } catch (FilmeNaoEncontradoException e) {
                 console.limpar();
-                System.out.println("------------------------"
-                        + "\n| Filme não encontrado |\n"
-                        + "------------------------\n\n");
+                System.out.println(e.getMessage());
             }
 
             System.out.println("1 - Voltar"
@@ -118,19 +120,12 @@ public class FilmeIU {
                 + "\n| Adicionar Novo Filme |\n"
                 + "------------------------\n\n");
 
+        if (count < 1) {
+            System.out.println("\nDigite o nome do filme: ");
+        }
         do {
-            if (count < 1) {
-                System.out.println("\nDigite o nome do filme: ");
-            } else {
-                System.out.println("\nNome do filme já usado, tente colocar outro:");
-            }
-
-            do {
-                name = input.nextLine();
-            } while (name == "");
-
-            count++;
-        } while (fachada.verificaNomeFilme(name));
+            name = input.nextLine();
+        } while (name == "");
 
         count = 0;
 
@@ -144,12 +139,16 @@ public class FilmeIU {
             description = input.nextLine();
         } while (description == "");
 
-        fachada.addMovie(name, gender, description);
+        try {
+            fachada.addMovie(name, gender, description);
 
-        console.limpar();
-        System.out.println("--------------------"
-                + "\n| Filme Adicionado |\n"
-                + "--------------------");
+            console.limpar();
+            System.out.println("--------------------"
+                    + "\n| Filme Adicionado |\n"
+                    + "--------------------");
+        } catch (FilmeCadastradoException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void editMovieByName(String name) {
@@ -158,15 +157,19 @@ public class FilmeIU {
 
         number = input.nextInt();
 
-        if (number != 6) {
+        try {
             fachada.editMovie(number, fachada.getFilmeByNome(name));
+        } catch (FilmeNaoEncontradoException e) {
+            System.out.println(e.getMessage());
         }
     }
 
     public void removeMovieByName(String name) {
         console.limpar();
-        if (number != 6) {
+        try {
             fachada.removeMovie(fachada.getFilmeByNome(name));
+        } catch (FilmeNaoEncontradoException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -175,16 +178,20 @@ public class FilmeIU {
         menu.editFilmeMenu();
 
         number = input.nextInt();
-
-        if (number != 6) {
+        try {
             fachada.editMovie(number, fachada.getFilmeById(id));
+        } catch (FilmeNaoEncontradoException e) {
+            console.limpar();
+            System.out.println(e.getMessage());
         }
     }
 
     public void removeMovieById(int id) {
         console.limpar();
-        if (number != 6) {
+        try {
             fachada.removeMovie(fachada.getFilmeById(id));
+        } catch (FilmeNaoEncontradoException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -212,24 +219,13 @@ public class FilmeIU {
                         idFilme = input.nextInt();
                     } while (idFilme < 0);
 
-                    if (fachada.getFilmeById(idFilme) != null) {
-                        if (action == "edit") {
-                            this.editMovieById(idFilme);
-                        } else {
-                            this.removeMovieById(idFilme);
-                        }
-                        sair = true;
+                    if (action == "edit") {
+                        this.editMovieById(idFilme);
                     } else {
-                        console.limpar();
-                        System.out.println("------------------------"
-                                + "\n| Filme não encontrado |\n"
-                                + "------------------------\n\n");
-                        System.out.println("Deseja tentar novamente ou sair?"
-                                + "\n1 - Tentar Novamente"
-                                + "\n2 - Sair");
-                        number = input.nextInt();
+                        this.removeMovieById(idFilme);
                     }
 
+                    sair = true;
                 } else if (number == 2) {
                     console.limpar();
                     System.out.println("Digite o nome do filme: ");
@@ -237,28 +233,24 @@ public class FilmeIU {
                         name = input.nextLine();
                     } while (name == "");
 
-                    if (fachada.getFilmeByNome(name) != null) {
-                        if (action == "edit") {
-                            this.editMovieByName(name);
-                        } else {
-                            this.removeMovieByName(name);
-                        }
-                        sair = true;
+                    if (action == "edit") {
+                        this.editMovieByName(name);
                     } else {
-                        console.limpar();
-                        System.out.println("------------------------"
-                                + "\n| Filme não encontrado |\n"
-                                + "------------------------\n\n");
-                        System.out.println("Deseja tentar novamente ou sair?"
-                                + "\n1 - Tentar Novamente"
-                                + "\n2 - Sair");
-                        number = input.nextInt();
+                        this.removeMovieByName(name);
                     }
+
+                    sair = true;
                 }
             } while (number < 1 || number > 2);
 
-            if (number == 2)
-                sair = true;
+            if (!sair) {
+                System.out.println("Deseja tentar novamente ou sair?"
+                        + "\n1 - Tentar Novamente"
+                        + "\n2 - Sair");
+                number = input.nextInt();
+                if (number == 2)
+                    sair = true;
+            }
 
         } while (!sair);
         console.limpar();

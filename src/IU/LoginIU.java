@@ -2,6 +2,8 @@ package IU;
 
 import java.util.Scanner;
 
+import Excecoes.UsuarioCadastradoException;
+import Excecoes.UsuarioNaoEncontradoException;
 import Fachada.Loja;
 
 public class LoginIU {
@@ -51,8 +53,12 @@ public class LoginIU {
                 count++;
             }
 
-            if (count < 5) {
-                fachada.acessarConta(email, senha);
+            try {
+                if (count < 5) {
+                    fachada.acessarConta(email, senha);
+                }
+            } catch (UsuarioNaoEncontradoException e) {
+                System.out.println(e.getMessage());
             }
 
         } else {
@@ -69,53 +75,51 @@ public class LoginIU {
         String senha;
         String confirmSenha;
         int count = 0;
-        boolean sair = false;
+
+        console.limpar();
+
+        System.out.println("------------"
+                + "\n| Cadastro |\n"
+                + "------------\n\n"
+                + "Digite seu nome: ");
+        do {
+            nome = input.nextLine();
+        } while (nome == "");
+
+        System.out.println("\nDigite seu melhor email: ");
+        do {
+            email = input.nextLine();
+        } while (email == "");
 
         do {
-            console.limpar();
-            System.out.println("------------"
-                    + "\n| Cadastro |\n"
-                    + "------------\n\n"
-                    + "Digite seu nome: ");
-            do {
-                nome = input.nextLine();
-            } while (nome == "");
-
-            System.out.println("\nDigite seu melhor email: ");
-            do {
-                email = input.nextLine();
-            } while (email == "");
-
-            do {
-                if (count >= 1) {
-                    console.limpar();
-                    System.out.println("-------------------------------------------------\n"
-                            + "| Senha diferentes, por favor digite novamente! |\n"
-                            + "-------------------------------------------------\n"
-                            + "\nNome informado: " + nome
-                            + "\nEmail informado: " + email);
-                }
-
-                System.out.println("\nDigite sua senha: ");
-                senha = input.nextLine();
-
-                System.out.println("\nConfirme sua senha: ");
-                confirmSenha = input.nextLine();
-
-                count++;
-            } while (!senha.equals(confirmSenha));
-
-            try {
-                fachada.cadastroConta(nome, email, senha, 0);
-                sair = true;
-
+            if (count >= 1) {
                 console.limpar();
-                System.out.println("--------------------------------------------------------------------------"
-                        + "\n| Cadastro realizado com sucesso, agora faça login para acessar a conta! |\n"
-                        + "--------------------------------------------------------------------------\n\n");
-            } catch (Exception e) {
-                sair = false;
+                System.out.println("-------------------------------------------------\n"
+                        + "| Senha diferentes, por favor digite novamente! |\n"
+                        + "-------------------------------------------------\n"
+                        + "\nNome informado: " + nome
+                        + "\nEmail informado: " + email);
             }
-        } while (!sair);
+
+            System.out.println("\nDigite sua senha: ");
+            senha = input.nextLine();
+
+            System.out.println("\nConfirme sua senha: ");
+            confirmSenha = input.nextLine();
+
+            count++;
+        } while (!senha.equals(confirmSenha));
+
+        try {
+            fachada.cadastroConta(nome, email, senha, 0);
+
+            console.limpar();
+            System.out.println("--------------------------------------------------------------------------"
+                    + "\n| Cadastro realizado com sucesso, agora faça login para acessar a conta! |\n"
+                    + "--------------------------------------------------------------------------\n\n");
+        } catch (UsuarioCadastradoException e) {
+            console.limpar();
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -101,23 +101,6 @@ public class UserIU {
         sair = false;
     }
 
-    public void editProfile() {
-        do {
-            console.limpar();
-            menu.editUserMenu();
-
-            number = input.nextInt();
-            if (number == 5) {
-                sair = true;
-            } else {
-                fachada.editUser(number);
-            }
-
-        } while (!sair);
-        console.limpar();
-        sair = false;
-    }
-
     public void myMovie() {
         int opcao;
 
@@ -147,7 +130,10 @@ public class UserIU {
             try {
                 if (opcao != 5) {
                     fachada.editUsers(opcao, fachada.getUserByEmail(email));
+                } else {
+                    sair = true;
                 }
+                console.limpar();
             } catch (UsuarioNaoEncontradoException e) {
                 console.limpar();
                 System.out.println(e.getMessage());
@@ -159,6 +145,7 @@ public class UserIU {
 
     public void removeUserByEmail(String email) {
         try {
+            console.limpar();
             fachada.removeUsers(fachada.getUserByEmail(email));
         } catch (UsuarioNaoEncontradoException e) {
             console.limpar();
@@ -176,7 +163,10 @@ public class UserIU {
             try {
                 if (opcao != 5) {
                     fachada.editUsers(opcao, fachada.getUserById(id));
+                } else {
+                    sair = true;
                 }
+                console.limpar();
             } catch (UsuarioNaoEncontradoException e) {
                 console.limpar();
                 System.out.println(e.getMessage());
@@ -188,6 +178,7 @@ public class UserIU {
 
     public void removeUserById(int id) {
         try {
+            console.limpar();
             fachada.removeUsers(fachada.getUserById(id));
         } catch (UsuarioNaoEncontradoException e) {
             console.limpar();

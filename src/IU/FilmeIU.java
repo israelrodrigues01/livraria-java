@@ -141,56 +141,80 @@ public class FilmeIU {
 
         try {
             fachada.addMovie(name, gender, description);
-
             console.limpar();
+
             System.out.println("--------------------"
                     + "\n| Filme Adicionado |\n"
                     + "--------------------");
         } catch (FilmeCadastradoException e) {
+            console.limpar();
             System.out.println(e.getMessage());
         }
     }
 
     public void editMovieByName(String name) {
-        console.limpar();
-        menu.editFilmeMenu();
+        int opcao;
+        do {
+            console.limpar();
+            menu.editFilmeMenu();
 
-        number = input.nextInt();
+            opcao = input.nextInt();
 
-        try {
-            fachada.editMovie(number, fachada.getFilmeByNome(name));
-        } catch (FilmeNaoEncontradoException e) {
-            System.out.println(e.getMessage());
-        }
+            try {
+                if (opcao != 6) {
+                    fachada.editMovie(opcao, fachada.getFilmeByNome(name));
+                } else {
+                    sair = true;
+                }
+                console.limpar();
+            } catch (FilmeNaoEncontradoException e) {
+                console.limpar();
+                System.out.println(e.getMessage());
+                sair = true;
+            }
+        } while (!sair);
+        sair = false;
     }
 
     public void removeMovieByName(String name) {
-        console.limpar();
         try {
+            console.limpar();
             fachada.removeMovie(fachada.getFilmeByNome(name));
-        } catch (FilmeNaoEncontradoException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void editMovieById(int id) {
-        console.limpar();
-        menu.editFilmeMenu();
-
-        number = input.nextInt();
-        try {
-            fachada.editMovie(number, fachada.getFilmeById(id));
         } catch (FilmeNaoEncontradoException e) {
             console.limpar();
             System.out.println(e.getMessage());
         }
     }
 
+    public void editMovieById(int id) {
+        int opcao;
+        do {
+            console.limpar();
+            menu.editFilmeMenu();
+
+            opcao = input.nextInt();
+            try {
+                if (opcao != 6) {
+                    fachada.editMovie(opcao, fachada.getFilmeById(id));
+                } else {
+                    sair = true;
+                }
+                console.limpar();
+            } catch (FilmeNaoEncontradoException e) {
+                console.limpar();
+                System.out.println(e.getMessage());
+                sair = true;
+            }
+        } while (!sair);
+        sair = false;
+    }
+
     public void removeMovieById(int id) {
-        console.limpar();
         try {
+            console.limpar();
             fachada.removeMovie(fachada.getFilmeById(id));
         } catch (FilmeNaoEncontradoException e) {
+            console.limpar();
             System.out.println(e.getMessage());
         }
     }
@@ -224,8 +248,6 @@ public class FilmeIU {
                     } else {
                         this.removeMovieById(idFilme);
                     }
-
-                    sair = true;
                 } else if (number == 2) {
                     console.limpar();
                     System.out.println("Digite o nome do filme: ");
@@ -238,19 +260,15 @@ public class FilmeIU {
                     } else {
                         this.removeMovieByName(name);
                     }
-
-                    sair = true;
                 }
             } while (number < 1 || number > 2);
 
-            if (!sair) {
-                System.out.println("Deseja tentar novamente ou sair?"
-                        + "\n1 - Tentar Novamente"
-                        + "\n2 - Sair");
-                number = input.nextInt();
-                if (number == 2)
-                    sair = true;
-            }
+            System.out.println("Deseja tentar novamente ou sair?"
+                    + "\n1 - Tentar Novamente"
+                    + "\n2 - Sair");
+            number = input.nextInt();
+            if (number == 2)
+                sair = true;
 
         } while (!sair);
         console.limpar();

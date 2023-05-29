@@ -105,7 +105,7 @@ public class IndexIU {
                     break;
                 }
                 case 3: {
-                    userIU.editProfile();
+                    userIU.editUserById(fachada.getUserLogado().getId());
                     break;
                 }
                 case 4: {
@@ -166,7 +166,7 @@ public class IndexIU {
                     break;
                 }
                 case 3: {
-                    userIU.editProfile();
+                    userIU.editUserById(fachada.getUserLogado().getId());
                     break;
                 }
                 case 4: {
